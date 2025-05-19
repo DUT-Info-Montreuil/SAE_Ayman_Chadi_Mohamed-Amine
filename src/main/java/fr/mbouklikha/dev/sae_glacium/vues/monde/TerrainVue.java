@@ -1,0 +1,51 @@
+package fr.mbouklikha.dev.sae_glacium.vues.monde;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
+
+import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class TerrainVue {
+    private Terrain terrain;
+
+    public TerrainVue(Terrain terrain) {
+        this.terrain = terrain;
+    }
+
+
+    public void afficherMap(TilePane tilePane) {
+        int[][] map = terrain.getMap();
+        tilePane.getChildren().clear();
+
+        for (int[] ligne : map) {
+            for (int val : ligne) {
+
+                ImageView bloc = new ImageView();
+                bloc.setFitWidth(32);
+                bloc.setFitHeight(32);
+
+                switch (val) {
+                    case 0:
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/ciel.png")));
+                        break;
+                    case 1:
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/neige.png")));
+                        break;
+                    case 2:
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/glace.png")));
+                        break;
+                    default:
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/neige.png")));
+                }
+
+                tilePane.getChildren().add(bloc);
+            }
+        }
+    }
+}
+
