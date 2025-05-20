@@ -1,13 +1,11 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
-import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
-import java.util.Random;
+import java.util.Set;
 
 
 public abstract class Acteur {
@@ -16,7 +14,6 @@ public abstract class Acteur {
     private int pv;
     private Environnement environnement;
     private IntegerProperty x, y;
-    protected double vitesseY = 0;
     protected boolean enSaut = false;
 
     public Acteur(String nom, int pv, int x, int y, Environnement environnement) {
@@ -51,7 +48,7 @@ public abstract class Acteur {
         return this.x;
     }
 
-    public  void setX(int n){
+    public  void setX(double n){
         x.setValue(n);
     }
 
@@ -63,7 +60,7 @@ public abstract class Acteur {
         return this.y;
     }
 
-    public  void setY(int n){
+    public  void setY(double n){
         y.setValue(n);
     }
 
@@ -81,9 +78,6 @@ public abstract class Acteur {
         this.pv+=n;
     }
 
-
-
-
     public boolean estVivant() {
         return this.pv>0;
     }
@@ -92,7 +86,7 @@ public abstract class Acteur {
         this.pv=0;
     }
 
-    public abstract void deplacer(KeyCode code);
+    public abstract void deplacer(Set<KeyCode> touches);
     public abstract void appliquerGravite(int[][] map, int tailleBloc);
 
     public boolean estEnSaut() {

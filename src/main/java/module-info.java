@@ -7,6 +7,6 @@ module fr.mbouklikha.dev.sae_glacium {
     opens fr.mbouklikha.dev.sae_glacium to javafx.fxml;
     exports fr.mbouklikha.dev.sae_glacium;
 
-    exports fr.mbouklikha.dev.sae_glacium.modeles.controller;
-    opens fr.mbouklikha.dev.sae_glacium.modeles.controller to javafx.fxml;
+    exports fr.mbouklikha.dev.sae_glacium.controller;
+    opens fr.mbouklikha.dev.sae_glacium.controller to javafx.fxml;
 }

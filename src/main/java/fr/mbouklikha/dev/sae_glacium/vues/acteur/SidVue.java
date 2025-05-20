@@ -1,14 +1,10 @@
 package fr.mbouklikha.dev.sae_glacium.vues.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
-import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
-import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressources;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
 
 public class SidVue {
 
@@ -29,8 +25,10 @@ public class SidVue {
         imageView = new ImageView(imageBase);
         imageView.setFitWidth(30);
         imageView.setFitHeight(56);
-        imageView.setX(100);
-        imageView.setY(100);
+
+        // 🔁 Lier x/y du modèle à ceux de l’image
+        imageView.xProperty().bind(acteur.getXProperty().asObject());
+        imageView.yProperty().bind(acteur.getYProperty().asObject());
 
         zoneJeu.getChildren().add(imageView);
     }
@@ -40,17 +38,19 @@ public class SidVue {
     }
 
     public void changerImage(String direction) {
+
         switch (direction) {
             case "droite":
+
                 imageView.setImage(imageDroite);
                 break;
             case "gauche":
                 imageView.setImage(imageGauche);
                 break;
-            case "base":
             default:
                 imageView.setImage(imageBase);
                 break;
         }
     }
 }
+

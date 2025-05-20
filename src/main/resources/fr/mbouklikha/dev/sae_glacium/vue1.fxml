@@ -7,11 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.mbouklikha.dev.sae_glacium.modeles.controller.Controller">
+<AnchorPane prefHeight="620.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.mbouklikha.dev.sae_glacium.controller.Controller">
    <children>
-      <Pane fx:id="zoneJeu" prefHeight="600.0" prefWidth="800.0">
+      <Pane fx:id="zoneJeu" prefHeight="620.0" prefWidth="1120.0">
          <children>
-            <TilePane fx:id="tilePane" prefHeight="600.0" prefWidth="800.0" />
+            <TilePane fx:id="tilePane" prefHeight="620.0" prefWidth="1120.0" />
          </children></Pane>
    </children>
 </AnchorPane>

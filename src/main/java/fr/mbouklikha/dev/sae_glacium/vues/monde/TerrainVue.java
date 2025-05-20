@@ -2,19 +2,17 @@ package fr.mbouklikha.dev.sae_glacium.vues.monde;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class TerrainVue {
     private Terrain terrain;
 
-    public TerrainVue(Terrain terrain) {
+    public TerrainVue(Terrain terrain, TilePane tilePane) {
         this.terrain = terrain;
+        afficherMap(tilePane);
     }
 
 
