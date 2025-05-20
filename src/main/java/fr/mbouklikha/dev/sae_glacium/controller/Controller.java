@@ -46,10 +46,8 @@ public class Controller {
 
         // Création et Initialisation de l'environnement et du terrain
         this.env = new Environnement(992, 576);
-        Terrain terrain = env.getTerrain();
 
-        TerrainVue terrainVue = new TerrainVue(terrain, tilePane);
-        terrainVue.afficherMap(tilePane);
+        new TerrainVue(env.getTerrain(), tilePane);
 
         // Création et Initialisation de Sid et SidVue
         sid = new Sid(env);
@@ -80,7 +78,6 @@ public class Controller {
                 Duration.seconds(0.017), // environ 60 FPS
                 ev -> {
                     sid.deplacer(touchesActives);
-                    sidVue.changerImage(sid.getDirection());
                     sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC); // applique la gravité
                     temps++;
                 }

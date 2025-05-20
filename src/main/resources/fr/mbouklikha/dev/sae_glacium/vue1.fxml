@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="620.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.mbouklikha.dev.sae_glacium.controller.Controller">
    <children>
       <Pane fx:id="zoneJeu" prefHeight="620.0" prefWidth="1120.0">
          <children>
+            <TilePane fx:id="tilePaneFond" layoutX="-8.0" layoutY="-7.0" prefHeight="632.0" prefWidth="1134.0" style="-fx-background-image: url('/fond.jpg');" />
             <TilePane fx:id="tilePane" prefHeight="620.0" prefWidth="1120.0" />
          </children></Pane>
    </children>

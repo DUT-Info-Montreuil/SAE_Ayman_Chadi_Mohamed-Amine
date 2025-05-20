@@ -37,8 +37,6 @@ public class TerrainVue {
                     case 2:
                         bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/glace.png")));
                         break;
-                    default:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/neige.png")));
                 }
 
                 tilePane.getChildren().add(bloc);
