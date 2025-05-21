@@ -29,18 +29,31 @@ public class Sid extends Acteur {
     // Méthodes deplacer abstract de Acteur
     @Override
     public void deplacer(Set<KeyCode> touches) {
+        int caseX = getX() / 32;
+        int caseY = getY() / 32;
+
+        int[][] map = getEnvironnement().getTerrain().getMap();
+
         if (touches.contains(KeyCode.D)) {
-            setX(getX() + 5);
-            setDirection("droite");
+            // Vérifie si la case à droite est vide
+            int prochaineCaseX = (getX() + 5 + 30) / 32; // 30 = largeur image
+            if (prochaineCaseX < map[0].length && map[caseY][prochaineCaseX] == -1) {
+                setX(getX() + 5);
+                setDirection("droite");
+            }
         }
 
         if (touches.contains(KeyCode.Q)) {
-            setX(getX() - 5);
-            setDirection("gauche");
+            // Vérifie si la case à gauche est vide
+            int prochaineCaseX = (getX() - 5) / 32;
+            if (prochaineCaseX >= 0 && map[caseY][prochaineCaseX] == -1) {
+                setX(getX() - 5);
+                setDirection("gauche");
+            }
         }
 
         if (touches.contains(KeyCode.SPACE) && !enSaut) {
-            vitesseY = SAUT_FORCE;
+            vitesseY = -8;
             enSaut = true;
         }
     }
