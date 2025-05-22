@@ -36,7 +36,7 @@ public class Sid extends Acteur {
 
         if (touches.contains(KeyCode.D)) {
             // Vérifie si la case à droite est vide
-            int prochaineCaseX = (getX() + 5 + 30) / 32; // 30 = largeur image
+            int prochaineCaseX = (getX() + 5 + 30) / 32; // 30 = largeur image du perso
             if (prochaineCaseX < map[0].length && map[caseY][prochaineCaseX] == -1) {
                 setX(getX() + 5);
                 setDirection("droite");
@@ -56,22 +56,38 @@ public class Sid extends Acteur {
             vitesseY = -8;
             enSaut = true;
         }
+
     }
+
+
 
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
-        int newY = (int)(getY() + vitesseY);
+        int newY = (int)(getY() + vitesseY); // nouvelle position du perso après mouvement vertical
 
-        int caseX = getX() / tailleBloc;
-        int caseY = (newY + 56) / tailleBloc; // 56 = hauteur sprite
+        int caseX = getX() / tailleBloc; // savoir dans quel colonne le perso se trouve
 
-        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1) {
-            vitesseY = 0;
-            enSaut = false;
-            setY(caseY * tailleBloc - 56);
+        if (vitesseY > 0) { // le personnage descend
+            int caseBas = (newY + 56) / tailleBloc; // 56 = hauteur du perso
+            if (caseBas < map.length && map[caseBas][caseX] == 1) {
+                vitesseY = 0;
+                enSaut = false;
+                setY(caseBas * tailleBloc - 56); // pose le perso avec le haut du bloc
+            } else {
+                setY(newY);
+            }
+        } else if (vitesseY < 0) { // le personnage monte (saute)
+            int caseHaut = newY / tailleBloc;
+            if (caseHaut >= 0 && map[caseHaut][caseX] == 1) {
+                vitesseY = 0;
+                setY((caseHaut + 1) * tailleBloc); // pose le perso avec le bas du bloc
+            } else {
+                setY(newY);
+            }
         } else {
             setY(newY);
         }
     }
+
 }

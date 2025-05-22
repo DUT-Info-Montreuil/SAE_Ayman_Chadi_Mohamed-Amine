@@ -46,7 +46,6 @@ public class SidVue {
 
         switch (direction) {
             case "droite":
-
                 imageView.setImage(imageDroite);
                 break;
             case "gauche":
