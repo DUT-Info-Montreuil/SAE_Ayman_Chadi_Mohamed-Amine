@@ -1,6 +1,5 @@
 package fr.mbouklikha.dev.sae_glacium.vues.acteur;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,9 +18,9 @@ public class SidVue {
     public SidVue(Sid sid, Pane zoneJeu) {
         this.sid = sid;
 
-        imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_droite.png"));
-        imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_gauche.png"));
-        imageBase = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid.png"));
+        imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_droite.png"));
+        imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_gauche.png"));
+        imageBase = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid.png"));
 
         imageView = new ImageView(imageBase);
         imageView.setFitWidth(30);

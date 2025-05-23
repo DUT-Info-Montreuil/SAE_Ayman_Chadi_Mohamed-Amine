@@ -29,13 +29,13 @@ public class TerrainVue {
 
                 switch (val) {
                     case 0:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/ciel.png")));
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/ciel.png")));
                         break;
                     case 1:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/neige.png")));
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/neige.png")));
                         break;
                     case 2:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/glace.png")));
+                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/glace.png")));
                         break;
                 }
 
