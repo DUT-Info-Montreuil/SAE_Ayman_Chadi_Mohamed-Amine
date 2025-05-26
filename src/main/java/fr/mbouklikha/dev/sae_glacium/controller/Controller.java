@@ -2,13 +2,10 @@ package fr.mbouklikha.dev.sae_glacium.controller;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
-import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
-import fr.mbouklikha.dev.sae_glacium.vues.objet.InventaireVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -44,6 +41,7 @@ public class Controller {
     private final int TAILLE_BLOC = 32;
 
 
+
     @FXML
     public void initialize() {
 
@@ -61,7 +59,6 @@ public class Controller {
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
-
 
 
 

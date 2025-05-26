@@ -1,4 +1,4 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
-public class Fer extends Ressources{
+public class Fer {
 }
