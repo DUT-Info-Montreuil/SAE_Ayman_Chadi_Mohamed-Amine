@@ -3,7 +3,6 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.input.KeyCode;
 
 import java.util.Set;
 
@@ -13,12 +12,17 @@ public class Yeti extends Acteur {
 
     private static final double GRAVITE = 0.4;
     private static final int HAUTEUR_YETI = 64;
-    private static final int VITESSE_X = 4;
+    private static final int VITESSE_X = 2;
 
     private double vitesseY = 0;
+    private boolean frappeEnCours = false;
 
-    public Yeti(Environnement env) {
-        super("Yeti", 10, 150, 100, env);
+    private Sid sid;
+
+    // Constructeur modifié avec Sid
+    public Yeti(Environnement env, Sid sid) {
+        super("Yeti", 10, 800, 250, env);
+        this.sid = sid;
     }
 
     public StringProperty getDirection() {
@@ -30,22 +34,51 @@ public class Yeti extends Acteur {
     }
 
     @Override
-    public void deplacer(Set<KeyCode> touches) {
-        boolean aBouge = false;
+    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {
+        // Pas contrôlé par clavier = méthode vide
+    }
 
-        if (touches.contains(KeyCode.RIGHT)) {
-            setX(getX() + VITESSE_X);
-            setDirection("droite");
-            aBouge = true;
+    public boolean isFrappeEnCours() {
+        return frappeEnCours;
+    }
+
+    public void suivreEtFrapperSid() {
+        if (sid == null || !sid.estVivant()) {
+            setDirection("immobile");
+            frappeEnCours = false;
+            return;
         }
 
-        if (touches.contains(KeyCode.LEFT)) {
-            setX(getX() - VITESSE_X);
-            setDirection("gauche");
-            aBouge = true;
+        int dx = sid.getX() - getX();
+        int dy = sid.getY() - getY();
+
+        // Si pas à la même hauteur = immobile
+        if (Math.abs(dy) > 50) {
+            frappeEnCours = false;
+            setDirection("immobile");
+            return;
         }
 
-        if (!aBouge) {
+        // Si proche à 20 pixels = frappe
+        if (Math.abs(dx) <= 20) {
+            frappeEnCours = true;
+            setDirection(dx > 0 ? "droite" : "gauche");
+            sid.estRalenti = true;
+        }
+        // Si dans une zone de suivi (moins de 200 pixels), suivre
+        else if (Math.abs(dx) <= 180) {
+            frappeEnCours = false;
+            if (dx > 0) {
+                setX(getX() + VITESSE_X);
+                setDirection("droite");
+            } else {
+                setX(getX() - VITESSE_X);
+                setDirection("gauche");
+            }
+        }
+        // Sinon immobile
+        else {
+            frappeEnCours = false;
             setDirection("immobile");
         }
     }
@@ -58,13 +91,12 @@ public class Yeti extends Acteur {
         int caseX = getX() / tailleBloc;
         int caseY = (newY + HAUTEUR_YETI) / tailleBloc;
 
-        // Sécurité : vérifier que les coordonnées sont valides
         if (caseY >= map.length || caseX >= map[0].length || caseX < 0) {
-            setY(newY); // Laisser tomber si hors map
+            setY(newY);
             return;
         }
 
-        if (map[caseY][caseX] == 1) { // Bloc solide en dessous
+        if (map[caseY][caseX] == 1) {
             vitesseY = 0;
             setY(caseY * tailleBloc - HAUTEUR_YETI);
         } else {

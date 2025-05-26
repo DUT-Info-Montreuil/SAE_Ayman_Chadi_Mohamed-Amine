@@ -1,10 +1,10 @@
 package fr.mbouklikha.dev.sae_glacium.controller;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
+import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Yeti;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
-import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
-
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
+import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
 import javafx.animation.KeyFrame;
@@ -19,7 +19,6 @@ import javafx.util.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Controller {
 
     @FXML
@@ -28,65 +27,58 @@ public class Controller {
     @FXML
     private Pane zoneJeu;
 
-
     private Timeline gameLoop;
     private Set<KeyCode> touchesActives = new HashSet<>();
-    private int temps = 0;
 
-    private  Environnement env;
+    private Environnement env;
     private Sid sid;
-
     private SidVue sidVue;
+
+    private Yeti yeti;
+    private YetiVue yetiVue;
 
     private final int TAILLE_BLOC = 32;
 
-
     @FXML
     public void initialize() {
-
-        // Création et Initialisation de l'environnement et du terrain
         this.env = new Environnement(992, 576);
-
         new TerrainVue(env.getTerrain(), tilePane);
 
-        // Création et Initialisation de Sid et SidVue
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
 
-        // Focus sur les élements du fxml
+        yeti = new Yeti(env, sid);
+        yetiVue = new YetiVue(yeti, zoneJeu);
+
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
 
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
-
             zoneJeu.requestFocus();
 
             initAnimation();
             gameLoop.play();
         });
-
     }
 
     private void initAnimation() {
         gameLoop = new Timeline();
-        temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame keyFrame = new KeyFrame(
-                Duration.seconds(0.017), // environ 60 FPS
+                Duration.seconds(0.017), // ≈ 60 FPS
                 ev -> {
+                    yeti.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
+                    yeti.suivreEtFrapperSid();
+
                     sid.deplacer(touchesActives);
-                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC); // applique la gravité
-                    temps++;
+                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
+
                 }
         );
+
         gameLoop.getKeyFrames().add(keyFrame);
     }
-
-
-
-
-
 }

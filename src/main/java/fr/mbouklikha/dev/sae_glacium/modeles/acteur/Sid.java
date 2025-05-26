@@ -13,6 +13,7 @@ public class Sid extends Acteur {
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
     private double vitesseY = 0;
+    public boolean estRalenti ;
 
     public Sid(Environnement env) {
         super("Sid", 10, 100, 100, env); // position initiale (100,100)
@@ -25,17 +26,33 @@ public class Sid extends Acteur {
     public void setDirection(String direction) {
         directionProperty.set(direction);
     }
+    private int finRalenti;
 
     // Méthodes deplacer abstract de Acteur
     @Override
     public void deplacer(Set<KeyCode> touches) {
+        if (finRalenti == 300) {
+            finRalenti = 0;
+            estRalenti = false;
+        }
         if (touches.contains(KeyCode.D)) {
-            setX(getX() + 5);
+            if (estRalenti ){
+                setX(getX() + 3);
+                finRalenti ++;
+            }else {
+                setX(getX() + 5);
+            }
+
             setDirection("droite");
         }
 
         if (touches.contains(KeyCode.Q)) {
-            setX(getX() - 5);
+            if (estRalenti){
+                setX(getX() - 3);
+                finRalenti ++;
+            }else {
+                setX(getX() - 5);
+            }
             setDirection("gauche");
         }
 
