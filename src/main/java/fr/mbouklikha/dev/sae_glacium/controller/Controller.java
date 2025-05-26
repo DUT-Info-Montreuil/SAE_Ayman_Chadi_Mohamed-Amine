@@ -3,14 +3,19 @@ package fr.mbouklikha.dev.sae_glacium.controller;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
+import fr.mbouklikha.dev.sae_glacium.vues.objet.InventaireVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
@@ -27,6 +32,12 @@ public class Controller {
 
     @FXML
     private Pane zoneJeu;
+
+    @FXML
+    private HBox conteneurInventaire;
+
+    private Inventaire inventaire;
+    private InventaireVue inventaireVue;
 
 
     private Timeline gameLoop;
@@ -54,6 +65,18 @@ public class Controller {
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
 
+        // Inventaire
+        inventaire = new Inventaire();
+        inventaire.ajouterItem(new Outil("pioche"));
+        inventaire.ajouterItem(new Outil("pioche"));
+        inventaire.ajouterItem(new Outil("dague"));
+        inventaire.ajouterItem(new Ressource("arc"));
+
+        inventaireVue = new InventaireVue(conteneurInventaire);
+        inventaireVue.afficherInventaire(inventaire);
+        conteneurInventaire.setVisible(false);
+
+
 
 
         // Focus sur les élements du fxml
@@ -61,10 +84,16 @@ public class Controller {
         zoneJeu.setFocusTraversable(true);
 
 
-
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
+            zoneJeu.setOnKeyPressed(event -> {
+                touchesActives.add(event.getCode());
+
+                if (event.getCode() == KeyCode.TAB) {
+                    inventaireVue.toggle();
+                }
+            });
 
             zoneJeu.requestFocus();
 

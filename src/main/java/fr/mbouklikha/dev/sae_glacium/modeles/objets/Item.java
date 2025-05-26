@@ -1,43 +1,38 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Item {
-    private String nom;
+    private Objets objet;
     private IntegerProperty quantite;
-    private int x;
-    private int y;
 
-    public Item(String nom, int x, int y) {
-        this.nom = nom;
-        this.quantite = new SimpleIntegerProperty(1);
-        this.x = x;
-        this.y = y;
+    public Item(Objets objet, int quantite) {
+        this.objet = objet;
+        this.quantite = new SimpleIntegerProperty(quantite);
     }
 
     public String getNom() {
-        return nom;
+        return objet.getNom();
     }
 
-    public int getX() {
-        return x;
+    public Objets getObjet(){
+        return this.objet;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void ajouter(int nb) {
-        this.quantite.set(this.quantite.get() + nb);
-    }
-
-    public int getQuantite() {
-        return quantite.get();
-    }
-
-    public IntegerProperty quantiteProperty() {
+    public IntegerProperty getQuantite() {
         return quantite;
     }
+
+
+    public void ajouter(int nb) {
+        this.quantite.set(quantite.get() + nb);
+    }
+
+    public void retirer(int nb) {
+        this.quantite.set(quantite.get() - nb);
+    }
+
 }
+
+

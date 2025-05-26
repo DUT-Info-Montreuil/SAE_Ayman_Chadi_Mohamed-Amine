@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 import java.util.Set;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 
 public class Sid extends Acteur {
 
@@ -13,6 +14,7 @@ public class Sid extends Acteur {
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
     private double vitesseY = 0;
+    private Inventaire inventaire;
 
     public Sid(Environnement env) {
         super("Sid", 10, 100, 100, env); // position initiale (100,100)
@@ -25,6 +27,11 @@ public class Sid extends Acteur {
     public void setDirection(String direction) {
         directionProperty.set(direction);
     }
+
+    public Inventaire getInventaire() {
+        return inventaire;
+    }
+
 
     // Méthodes deplacer abstract de Acteur
     @Override
