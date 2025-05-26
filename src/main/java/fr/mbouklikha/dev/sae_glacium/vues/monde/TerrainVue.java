@@ -15,7 +15,6 @@ public class TerrainVue {
         afficherMap(tilePane);
     }
 
-
     public void afficherMap(TilePane tilePane) {
         int[][] map = terrain.getMap();
         tilePane.getChildren().clear();
@@ -38,7 +37,6 @@ public class TerrainVue {
                         bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/glace.png")));
                         break;
                 }
-
                 tilePane.getChildren().add(bloc);
             }
         }

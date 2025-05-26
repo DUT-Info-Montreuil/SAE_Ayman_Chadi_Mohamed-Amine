@@ -22,23 +22,17 @@ import java.util.Set;
 // SPRINT1
 
 public class Controller {
-
     @FXML
     private TilePane tilePane;
-
     @FXML
     private Pane zoneJeu;
-
-
     private Timeline gameLoop;
     private Set<KeyCode> touchesActives = new HashSet<>();
     private int temps = 0;
-
     private  Environnement env;
     private Sid sid;
-
     private SidVue sidVue;
-
+    private Souris souris;
     private final int TAILLE_BLOC = 32;
 
 
@@ -47,12 +41,12 @@ public class Controller {
 
         // Création et Initialisation de l'environnement et du terrain
         this.env = new Environnement(992, 576);
-
-        new TerrainVue(env.getTerrain(), tilePane);
+        TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
 
         // Création et Initialisation de Sid et SidVue
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
+        souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
 
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
@@ -61,7 +55,7 @@ public class Controller {
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
-
+            zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
             zoneJeu.requestFocus();
 
             initAnimation();
@@ -81,13 +75,9 @@ public class Controller {
                     sid.deplacer(touchesActives);
                     sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC); // applique la gravité
                     temps++;
+
                 }
         );
         gameLoop.getKeyFrames().add(keyFrame);
     }
-
-
-
-
-
 }

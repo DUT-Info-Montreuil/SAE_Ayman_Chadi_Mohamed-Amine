@@ -38,10 +38,6 @@ public class SidVue {
         zoneJeu.getChildren().add(imageView);
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
     public void changerImage(String direction) {
 
         switch (direction) {

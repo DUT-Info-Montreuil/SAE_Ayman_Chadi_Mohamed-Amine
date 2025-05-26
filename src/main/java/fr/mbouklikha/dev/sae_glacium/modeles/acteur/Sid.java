@@ -30,7 +30,8 @@ public class Sid extends Acteur {
     @Override
     public void deplacer(Set<KeyCode> touches) {
         int caseX = getX() / 32;
-        int caseY = getY() / 32;
+        int caseY = (getY() + 56 - 1) / 32; // le -1 évite de dépasser le blocs sur les cotés
+
 
         int[][] map = getEnvironnement().getTerrain().getMap();
 
@@ -56,9 +57,7 @@ public class Sid extends Acteur {
             vitesseY = -8;
             enSaut = true;
         }
-
     }
-
 
 
     @Override
@@ -70,7 +69,7 @@ public class Sid extends Acteur {
 
         if (vitesseY > 0) { // le personnage descend
             int caseBas = (newY + 56) / tailleBloc; // 56 = hauteur du perso
-            if (caseBas < map.length && map[caseBas][caseX] == 1) {
+            if (caseBas < map.length && map[caseBas][caseX] == 1 || map[caseBas][caseX] == 2) {
                 vitesseY = 0;
                 enSaut = false;
                 setY(caseBas * tailleBloc - 56); // pose le perso avec le haut du bloc
@@ -79,7 +78,7 @@ public class Sid extends Acteur {
             }
         } else if (vitesseY < 0) { // le personnage monte (saute)
             int caseHaut = newY / tailleBloc;
-            if (caseHaut >= 0 && map[caseHaut][caseX] == 1) {
+            if (caseHaut >= 0 && map[caseHaut][caseX] == 1 || map[caseHaut][caseX] == 2) {
                 vitesseY = 0;
                 setY((caseHaut + 1) * tailleBloc); // pose le perso avec le bas du bloc
             } else {
@@ -89,5 +88,4 @@ public class Sid extends Acteur {
             setY(newY);
         }
     }
-
 }
