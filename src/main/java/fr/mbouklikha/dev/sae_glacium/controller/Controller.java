@@ -5,7 +5,6 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
@@ -68,14 +67,12 @@ public class Controller {
         // Inventaire
         inventaire = new Inventaire();
         inventaire.ajouterItem(new Outil("pioche"));
-        inventaire.ajouterItem(new Outil("pioche"));
         inventaire.ajouterItem(new Outil("dague"));
-        inventaire.ajouterItem(new Ressource("arc"));
+        inventaire.ajouterItem(new Outil("arc"));
 
         inventaireVue = new InventaireVue(conteneurInventaire);
         inventaireVue.afficherInventaire(inventaire);
         conteneurInventaire.setVisible(false);
-
 
 
 
@@ -91,7 +88,7 @@ public class Controller {
                 touchesActives.add(event.getCode());
 
                 if (event.getCode() == KeyCode.TAB) {
-                    inventaireVue.toggle();
+                    inventaireVue.basculerVisibilite();
                 }
             });
 

@@ -3,6 +3,8 @@ package fr.mbouklikha.dev.sae_glacium.vues.objet;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,25 +25,38 @@ public class InventaireVue {
         for (Item item : inventaire.getItems()) {
             VBox caseObjet = new VBox();
             caseObjet.setSpacing(5);
+            caseObjet.setAlignment(Pos.CENTER);
 
             // Image
             ImageView imageView = new ImageView();
-            imageView.setFitWidth(40);
-            imageView.setFitHeight(40);
+            imageView.setFitWidth(32);
+            imageView.setFitHeight(32);
 
-            try {
-                String nomImage = item.getObjet().getNom().toLowerCase();
-                Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/arme/" + nomImage + ".png"));
-                imageView.setImage(image);
-            } catch (Exception e) {
-                System.out.println("Image introuvable pour " + item.getObjet().getNom());
-            }
+
+            String nomImage = item.getObjet().getNom().toLowerCase();
+            Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + nomImage + ".png"));
+            imageView.setImage(image);
+
+
+
+            // Création du bouton
+            Button bouton = new Button();
+            bouton.setPrefSize(48, 48);
+            bouton.setStyle("-fx-background-color: transparent;");
+            bouton.setGraphic(imageView);
+            bouton.setFocusTraversable(false);
+
+            bouton.setOnAction(e -> {
+                System.out.println("Bouton cliqué : " + item.getObjet().getNom());
+            });
 
             // Quantité
             Label quantiteLabel = new Label();
             quantiteLabel.textProperty().bind(Bindings.convert(item.getQuantite()));
 
-            caseObjet.getChildren().addAll(imageView, quantiteLabel);
+            // Ajout dans la case
+            caseObjet.getChildren().addAll(bouton, quantiteLabel);
+            caseObjet.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-padding: 5;");
             conteneur.getChildren().add(caseObjet);
         }
     }
@@ -54,7 +69,7 @@ public class InventaireVue {
         return conteneur.isVisible();
     }
 
-    public void toggle() {
+    public void basculerVisibilite() {
         setVisible(!isVisible());
     }
 }
