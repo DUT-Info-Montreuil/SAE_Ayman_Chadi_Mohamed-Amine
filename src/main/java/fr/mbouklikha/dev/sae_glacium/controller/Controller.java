@@ -22,7 +22,7 @@ import javafx.util.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-// SPRINT1
+
 
 public class Controller {
 
@@ -67,11 +67,13 @@ public class Controller {
         // Inventaire
         inventaire = new Inventaire();
         inventaire.ajouterItem(new Outil("pioche"));
+        inventaire.ajouterItem(new Outil("pioche"));
         inventaire.ajouterItem(new Outil("dague"));
         inventaire.ajouterItem(new Outil("arc"));
 
         inventaireVue = new InventaireVue(conteneurInventaire);
-        inventaireVue.afficherInventaire(inventaire);
+        inventaireVue.initialiserCases(inventaire);
+        inventaireVue.mettreAJourInventaire(inventaire);
         conteneurInventaire.setVisible(false);
 
 
@@ -99,6 +101,8 @@ public class Controller {
         });
 
     }
+
+
 
     private void initAnimation() {
         gameLoop = new Timeline();

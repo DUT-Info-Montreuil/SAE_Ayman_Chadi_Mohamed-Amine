@@ -24,5 +24,9 @@ public class Inventaire {
         }
         items.add(objetAAjouter.creerItem());
     }
+
+    public void supprimerItem(Item item) {
+        items.remove(item);
+    }
 }
 
