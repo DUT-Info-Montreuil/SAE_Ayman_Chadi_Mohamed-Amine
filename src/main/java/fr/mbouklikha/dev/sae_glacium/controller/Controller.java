@@ -4,6 +4,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 
+import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
@@ -34,6 +35,8 @@ public class Controller {
     private SidVue sidVue;
     private Souris souris;
     private final int TAILLE_BLOC = 32;
+    private SourisVue sourisVue;
+
 
 
     @FXML
@@ -47,6 +50,9 @@ public class Controller {
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
+        sourisVue = new SourisVue(zoneJeu);
+
+
 
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
@@ -56,6 +62,9 @@ public class Controller {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
             zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
+            zoneJeu.setOnMouseMoved(event -> {
+                sourisVue.majPositionCurseur(event.getX(), event.getY());
+            });
             zoneJeu.requestFocus();
 
             initAnimation();

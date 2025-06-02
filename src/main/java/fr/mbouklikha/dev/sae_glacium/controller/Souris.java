@@ -15,7 +15,7 @@ public class Souris {
     private final int TAILLE_BLOC = 32;
     private final TerrainVue terrainVue;
     private final TilePane tilePane;
-    private final int DISTANCE_MAX = 64; // distance maximale autorisée (2 bloc)
+    private final int DISTANCE_MAX = 96; // distance maximale autorisée (3 bloc)
 
     public Souris(Sid sid, Terrain terrain, TerrainVue terrainVue, TilePane tilePane) {
         this.sid = sid;

@@ -84,8 +84,6 @@ public class Sid extends Acteur {
             } else {
                 setY(newY);
             }
-        } else {
-            setY(newY);
         }
     }
 }
