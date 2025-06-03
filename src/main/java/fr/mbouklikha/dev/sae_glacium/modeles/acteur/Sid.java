@@ -4,6 +4,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.input.KeyCode;
 import java.util.Set;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
@@ -11,6 +12,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 public class Sid extends Acteur {
 
     private final StringProperty directionProperty = new SimpleStringProperty("base");
+    private final BooleanProperty estRalenti = new SimpleBooleanProperty(false);
 
     private String objetEnMain = "pioche";
 
@@ -18,9 +20,11 @@ public class Sid extends Acteur {
     private final double SAUT_FORCE = -8;
     private double vitesseY = 0;
     private Inventaire inventaire;
+    private int finRalenti;
 
     public Sid(Environnement env) {
-        super("Sid", 10, 100, 100, env); // position initiale (100,100)
+
+        super("Sid", 10, 100, 100, env);
     }
 
     public StringProperty getDirection() {
@@ -37,64 +41,52 @@ public class Sid extends Acteur {
 
 
     // Méthodes deplacer abstract de Acteur
-    @Override
-    public void deplacer(Set<KeyCode> touches) {
-        int caseX = getX() / 32;
-        int caseY = getY() / 32;
-
-        int[][] map = getEnvironnement().getTerrain().getMap();
-
-        if (touches.contains(KeyCode.D)) {
-            // Vérifie si la case à droite est vide
-            int prochaineCaseX = (getX() + 5 + 30) / 32; // 30 = largeur image du perso
-            if (prochaineCaseX < map[0].length && map[caseY][prochaineCaseX] == -1) {
-                setX(getX() + 5);
-                setDirection("droite");
-            }
-        }
-
-        if (touches.contains(KeyCode.Q)) {
-            // Vérifie si la case à gauche est vide
-            int prochaineCaseX = (getX() - 5) / 32;
-            if (prochaineCaseX >= 0 && map[caseY][prochaineCaseX] == -1) {
-                setX(getX() - 5);
-                setDirection("gauche");
-            }
-        }
-
-        if (touches.contains(KeyCode.SPACE) && !enSaut) {
-            vitesseY = -8;
-            enSaut = true;
-        }
-
+    public BooleanProperty estRalentiProperty() {
+        return estRalenti;
     }
 
+    public boolean isEstRalenti() {
+        return estRalenti.get();
+    }
 
+    public void setEstRalenti(boolean ralenti) {
+        estRalenti.set(ralenti);
+    }
+
+    @Override
+    public void deplacer(Set<KeyCode> touches) {
+        if (finRalenti == 300) {
+            finRalenti = 0;
+            setEstRalenti(false);
+        }
+        if (touches.contains(KeyCode.D)) {
+            setX(getX() + (isEstRalenti() ? 2 : 4));
+            setDirection("droite");
+            if (isEstRalenti()) finRalenti++;
+        }
+        if (touches.contains(KeyCode.Q)) {
+            setX(getX() - (isEstRalenti() ? 2 : 4));
+            setDirection("gauche");
+            if (isEstRalenti()) finRalenti++;
+        }
+        if (touches.contains(KeyCode.SPACE) && !enSaut) {
+            vitesseY = SAUT_FORCE;
+            enSaut = true;
+        }
+    }
 
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
-        int newY = (int)(getY() + vitesseY); // nouvelle position du perso après mouvement vertical
+        int newY = (int)(getY() + vitesseY);
 
-        int caseX = getX() / tailleBloc; // savoir dans quel colonne le perso se trouve
+        int caseX = getX() / tailleBloc;
+        int caseY = (newY + 56) / tailleBloc;
 
-        if (vitesseY > 0) { // le personnage descend
-            int caseBas = (newY + 56) / tailleBloc; // 56 = hauteur du perso
-            if (caseBas < map.length && map[caseBas][caseX] == 1) {
-                vitesseY = 0;
-                enSaut = false;
-                setY(caseBas * tailleBloc - 56); // pose le perso avec le haut du bloc
-            } else {
-                setY(newY);
-            }
-        } else if (vitesseY < 0) { // le personnage monte (saute)
-            int caseHaut = newY / tailleBloc;
-            if (caseHaut >= 0 && map[caseHaut][caseX] == 1) {
-                vitesseY = 0;
-                setY((caseHaut + 1) * tailleBloc); // pose le perso avec le bas du bloc
-            } else {
-                setY(newY);
-            }
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1) {
+            vitesseY = 0;
+            enSaut = false;
+            setY(caseY * tailleBloc - 56);
         } else {
             setY(newY);
         }
