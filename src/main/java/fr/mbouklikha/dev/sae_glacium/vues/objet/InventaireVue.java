@@ -1,7 +1,9 @@
 package fr.mbouklikha.dev.sae_glacium.vues.objet;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,8 +19,12 @@ public class InventaireVue {
     private ImageView[] images = new ImageView[8];
     private Label[] quantites = new Label[8];
 
-    public InventaireVue(HBox conteneur) {
+    private Sid sid;
+    private ObjetEnMainVue objetEnMainVue;
+
+    public InventaireVue(HBox conteneur, Sid sid) {
         this.conteneur = conteneur;
+        this.sid = sid;
     }
 
     public void initialiserCases(Inventaire inventaire) {
@@ -39,21 +45,25 @@ public class InventaireVue {
 
             caseObjet.setOnMouseClicked(event -> {
                 if (index < inventaire.getItems().size()) {
-                    Item item = inventaire.getItems().get(index);
-                    int qte = item.getQuantite().get();
-                    if (qte > 0) {
-                        item.getQuantite().set(qte - 1);
-                        System.out.println(item.getNom() + " a été retiré");
-                        if (item.getQuantite().get() == 0) {
-                            inventaire.getItems().remove(index);
-                        }
+                    Item nouvelItem = inventaire.getItems().get(index);
+                    String nouvelObjet = nouvelItem.getNom();
+
+                    // Remet l'ancien objet en main dans l'inventaire
+                    String ancienObjet = sid.getObjetEnMain();
+                    if (!ancienObjet.equals(nouvelObjet)) {
+                        inventaire.ajouterItem(new Outil(ancienObjet));
+                        sid.setObjetEnMain(nouvelObjet);
+                        inventaire.retirerUnItem(nouvelObjet); // Retire 1 du nouvel objet
                         mettreAJourInventaire(inventaire);
+                        objetEnMainVue.mettreAJour();
+                        System.out.println("Objet en main : " + nouvelObjet);
                     }
                 }
             });
 
+
             caseObjet.setOnMouseEntered(e -> caseObjet.setStyle(
-                    "-fx-border-color: blue; -fx-border-width: 2; -fx-padding: 5;"
+                    "-fx-border-color: yellow; -fx-border-width: 2; -fx-padding: 5;"
             ));
             caseObjet.setOnMouseExited(e -> caseObjet.setStyle(
                     "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 5;"
@@ -87,15 +97,12 @@ public class InventaireVue {
         }
     }
 
-    public void setVisible(boolean visible) {
-        conteneur.setVisible(visible);
+    public void setObjetEnMainVue(ObjetEnMainVue objetEnMainVue) {
+        this.objetEnMainVue = objetEnMainVue;
     }
 
     public boolean isVisible() {
         return conteneur.isVisible();
     }
 
-    public void basculerVisibilite() {
-        setVisible(!isVisible());
-    }
 }

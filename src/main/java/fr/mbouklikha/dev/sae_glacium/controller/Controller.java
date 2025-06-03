@@ -5,10 +5,12 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
 import fr.mbouklikha.dev.sae_glacium.vues.objet.InventaireVue;
+import fr.mbouklikha.dev.sae_glacium.vues.objet.ObjetEnMainVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -37,6 +39,7 @@ public class Controller {
 
     private Inventaire inventaire;
     private InventaireVue inventaireVue;
+    private ObjetEnMainVue objetEnMainVue;
 
 
     private Timeline gameLoop;
@@ -64,19 +67,31 @@ public class Controller {
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
 
+
+        // -------------------------------------------------------------------------------------------
+
         // Inventaire
         inventaire = new Inventaire();
-        inventaire.ajouterItem(new Outil("pioche"));
-        inventaire.ajouterItem(new Outil("pioche"));
         inventaire.ajouterItem(new Outil("dague"));
         inventaire.ajouterItem(new Outil("arc"));
 
-        inventaireVue = new InventaireVue(conteneurInventaire);
+        inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inventaire);
         inventaireVue.mettreAJourInventaire(inventaire);
-        conteneurInventaire.setVisible(false);
+        conteneurInventaire.setVisible(true);
 
 
+        objetEnMainVue = new ObjetEnMainVue(sid);
+
+        // Positionner en haut à droite
+        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
+        objetEnMainVue.getConteneur().setLayoutY(10);
+
+        zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
+
+        inventaireVue.setObjetEnMainVue(objetEnMainVue);
+
+        // ---------------------------------------------------------------------------------
 
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
@@ -86,13 +101,6 @@ public class Controller {
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
-            zoneJeu.setOnKeyPressed(event -> {
-                touchesActives.add(event.getCode());
-
-                if (event.getCode() == KeyCode.TAB) {
-                    inventaireVue.basculerVisibilite();
-                }
-            });
 
             zoneJeu.requestFocus();
 
@@ -113,7 +121,7 @@ public class Controller {
                 Duration.seconds(0.017), // environ 60 FPS
                 ev -> {
                     sid.deplacer(touchesActives);
-                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC); // applique la gravité
+                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);  // applique la gravité
                     temps++;
                 }
         );

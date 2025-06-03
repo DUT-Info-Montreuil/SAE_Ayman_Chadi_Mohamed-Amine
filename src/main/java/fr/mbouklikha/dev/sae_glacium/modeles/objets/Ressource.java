@@ -9,4 +9,8 @@ public class Ressource extends Objets {
     public Item creerItem() {
         return new Item(this, 1);
     }
+
+    public String getType() {
+        return "Ressource";
+    }
 }

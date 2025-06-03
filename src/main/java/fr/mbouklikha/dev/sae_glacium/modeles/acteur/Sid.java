@@ -1,6 +1,7 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -10,6 +11,8 @@ import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 public class Sid extends Acteur {
 
     private final StringProperty directionProperty = new SimpleStringProperty("base");
+
+    private String objetEnMain = "pioche";
 
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
@@ -95,6 +98,15 @@ public class Sid extends Acteur {
         } else {
             setY(newY);
         }
+    }
+
+
+    public String getObjetEnMain() {
+        return objetEnMain;
+    }
+
+    public void setObjetEnMain(String objet) {
+        this.objetEnMain = objet;
     }
 
 }
