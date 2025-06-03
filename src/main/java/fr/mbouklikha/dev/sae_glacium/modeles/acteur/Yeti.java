@@ -1,15 +1,14 @@
+// --- Yeti.java ---
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
 import java.util.Set;
 
 public class Yeti extends Acteur {
 
     private final StringProperty direction = new SimpleStringProperty("immobile");
-
     private static final double GRAVITE = 0.4;
     private static final int HAUTEUR_YETI = 64;
     private static final int VITESSE_X = 2;
@@ -19,7 +18,6 @@ public class Yeti extends Acteur {
 
     private Sid sid;
 
-    // Constructeur modifié avec Sid
     public Yeti(Environnement env, Sid sid) {
         super("Yeti", 10, 800, 250, env);
         this.sid = sid;
@@ -34,9 +32,7 @@ public class Yeti extends Acteur {
     }
 
     @Override
-    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {
-        // Pas contrôlé par clavier = méthode vide
-    }
+    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {}
 
     public boolean isFrappeEnCours() {
         return frappeEnCours;
@@ -52,32 +48,21 @@ public class Yeti extends Acteur {
         int dx = sid.getX() - getX();
         int dy = sid.getY() - getY();
 
-        // Si pas à la même hauteur = immobile
         if (Math.abs(dy) > 50) {
             frappeEnCours = false;
             setDirection("immobile");
             return;
         }
 
-        // Si proche à 20 pixels = frappe
         if (Math.abs(dx) <= 20) {
             frappeEnCours = true;
             setDirection(dx > 0 ? "droite" : "gauche");
-            sid.estRalenti = true;
-        }
-        // Si dans une zone de suivi (moins de 200 pixels), suivre
-        else if (Math.abs(dx) <= 180) {
+            sid.setEstRalenti(true);
+        } else if (Math.abs(dx) <= 180) {
             frappeEnCours = false;
-            if (dx > 0) {
-                setX(getX() + VITESSE_X);
-                setDirection("droite");
-            } else {
-                setX(getX() - VITESSE_X);
-                setDirection("gauche");
-            }
-        }
-        // Sinon immobile
-        else {
+            setX(getX() + (dx > 0 ? VITESSE_X : -VITESSE_X));
+            setDirection(dx > 0 ? "droite" : "gauche");
+        } else {
             frappeEnCours = false;
             setDirection("immobile");
         }

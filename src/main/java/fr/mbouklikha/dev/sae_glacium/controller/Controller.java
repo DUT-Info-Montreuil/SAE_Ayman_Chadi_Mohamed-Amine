@@ -75,7 +75,6 @@ public class Controller {
 
                     sid.deplacer(touchesActives);
                     sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-
                 }
         );
 
