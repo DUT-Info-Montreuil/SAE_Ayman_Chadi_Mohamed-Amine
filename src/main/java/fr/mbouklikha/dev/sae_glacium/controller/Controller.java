@@ -6,7 +6,6 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
@@ -123,7 +122,6 @@ public class Controller {
                     yeti.suivreEtFrapperSid();
 
                     sid.deplacer(touchesActives);
-                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
                     sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);  // applique la gravité
                     temps++;
                 }
