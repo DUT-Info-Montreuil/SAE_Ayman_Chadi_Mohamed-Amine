@@ -20,11 +20,11 @@ public class SidVue {
     public SidVue(Sid sid, Pane zoneJeu) {
         this.sid = sid;
 
-        imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_droite.png"));
-        imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_gauche.png"));
+        imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_droite.png"));
+        imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_gauche.png"));
         imageDroiteRalenti = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_droite_glace.png"));
         imageGaucheRalenti = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_gauche_glace.png"));
-        imageBase = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid.png"));
+        imageBase = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid.png"));
 
         imageView = new ImageView(imageBase);
         imageView.setFitWidth(30);
