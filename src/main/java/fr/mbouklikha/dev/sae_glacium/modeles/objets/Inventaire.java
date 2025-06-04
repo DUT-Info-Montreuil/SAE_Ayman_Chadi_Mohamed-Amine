@@ -47,8 +47,5 @@ public class Inventaire {
     }
 
 
-    public void supprimerItem(Item item) {
-        items.remove(item);
-    }
 }
 

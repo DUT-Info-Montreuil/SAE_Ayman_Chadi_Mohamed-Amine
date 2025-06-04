@@ -29,9 +29,6 @@ public class Item {
         this.quantite.set(quantite.get() + nb);
     }
 
-    public void retirer(int nb) {
-        this.quantite.set(quantite.get() - nb);
-    }
 
 }
 
