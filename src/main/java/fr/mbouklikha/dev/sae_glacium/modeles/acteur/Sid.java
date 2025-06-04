@@ -21,6 +21,7 @@ public class Sid extends Acteur {
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
     private double vitesseY = 0;
+    private boolean aDejaSaute = false;
     private Inventaire inventaire;
     private int finRalenti;
     private Hitbox hitbox;
@@ -68,35 +69,39 @@ public class Sid extends Acteur {
     public void deplacer(Set<KeyCode> touches) {
         int nouvelleX = getX();
 
-        if (finRalenti == 300) {
+        if (finRalenti == 240) {
             finRalenti = 0;
             setEstRalenti(false);
         }
 
         if (touches.contains(KeyCode.D)) {
-            nouvelleX += 5;
-            setX(getX() + (isEstRalenti() ? 2 : 4));
+            nouvelleX = getX() + (isEstRalenti() ? 2 : 4);
             setDirection("droite");
             if (isEstRalenti()) finRalenti++;
         }
         if (touches.contains(KeyCode.Q)) {
-            nouvelleX -= 5;
-            setX(getX() - (isEstRalenti() ? 2 : 4));
+            nouvelleX = getX() - (isEstRalenti() ? 2 : 4);
             setDirection("gauche");
             if (isEstRalenti()) finRalenti++;
         }
 
         // Tester collision avant de bouger
-        hitbox.setPosition((int) nouvelleX, getY());
+        hitbox.setPosition(nouvelleX, getY());
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
             setX(nouvelleX);
         }
-        hitbox.setPosition(getX(), getY());  //System.out.println(("avant :" + ", " + this.getX() + this.getY() + this.getHitbox().getRectangle()));
+        hitbox.setPosition(getX(), getY());
 
-        if (touches.contains(KeyCode.SPACE) && !enSaut) {
-            vitesseY = SAUT_FORCE;
-            enSaut = true;
+        if (touches.contains(KeyCode.SPACE)) {
+            if (!enSaut && !aDejaSaute) {
+                vitesseY = SAUT_FORCE;
+                enSaut = true;
+                aDejaSaute = true; // on empêche le saut tant que la touche est enfoncée
+            }
+        } else {
+            aDejaSaute = false; // la touche a été relâchée
         }
+
 
         // Met à jour la position de la hitbox
         hitbox.setPosition(getX(), getY());
@@ -106,12 +111,12 @@ public class Sid extends Acteur {
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
-        int newY = (int)(getY() + vitesseY);
+        int newY = (int) (getY() + vitesseY);
 
         int caseX = getX() / tailleBloc;
         int caseY = (newY + 56) / tailleBloc;
 
-        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1) {
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 && map[caseY][caseX] == 2) {
             vitesseY = 0;
             enSaut = false;
             setY(caseY * tailleBloc - 56);
@@ -119,15 +124,23 @@ public class Sid extends Acteur {
             setY(newY);
         }
 
-        hitbox.setPosition(getX(), (int) newY);
+        hitbox.setPosition(getX(), newY);
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-            setY((int) newY);
+            setY(newY);
+            hitbox.setPosition(getX(), newY);
         } else {
             if (vitesseY > 0) {
                 // Collision avec le sol, on bloque la chute
                 enSaut = false;
+                setY((int) (getY() / tailleBloc) * tailleBloc);
             }
-            vitesseY = 0;
+            else if (vitesseY < 0) {
+                // En montée : on se cogne la tête
+                // On aligne Sid juste en dessous du bloc touché
+                setY(( getY() / tailleBloc + 1) * tailleBloc);
+                vitesseY = 0.1;
+            }
+
         }
         hitbox.setPosition(getX(), getY());
 
