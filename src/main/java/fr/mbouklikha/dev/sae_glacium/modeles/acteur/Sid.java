@@ -31,7 +31,7 @@ public class Sid extends Acteur {
     public Sid(Environnement env) {
         super("Sid", 10, 100, 100, env); // position initiale (100,100)
         this.environnement = env;
-        hitbox = new Hitbox(getX(), getY(), 25, 54); // taille du perso
+        hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
 
     }
 

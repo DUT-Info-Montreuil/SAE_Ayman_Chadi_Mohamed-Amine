@@ -25,6 +25,23 @@ public class Terrain {
         }
     }
 
+    public void mettreAJourHitboxBlocsSolides() {
+        hitboxBlocsSolides.clear();
+        int[][] map = getMap();
+
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[0].length; x++) {
+                if (map[y][x] == 1 || map[y][x] == 2) { // blocs solides
+                    // Créer une hitbox pour ce bloc
+                    Hitbox hb = new Hitbox(x * TAILLE_BLOC, y * TAILLE_BLOC, TAILLE_BLOC, TAILLE_BLOC);
+                    hitboxBlocsSolides.add(hb);
+                }
+            }
+        }
+    }
+
+
+
     public int[][] map = {
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},

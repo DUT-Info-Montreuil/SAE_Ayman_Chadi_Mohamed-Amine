@@ -15,7 +15,7 @@ public class Souris {
     private final int TAILLE_BLOC = 32;
     private final TerrainVue terrainVue;
     private final TilePane tilePane;
-    private final int DISTANCE_MAX = 96; // distance maximale autorisée (3 bloc)
+    private final int DISTANCE_MAX = 128; // distance maximale autorisée (4 bloc)
 
     public Souris(Sid sid, Terrain terrain, TerrainVue terrainVue, TilePane tilePane) {
         this.sid = sid;
@@ -26,10 +26,11 @@ public class Souris {
 
     private void casserBlocXY(int x, int y) {
         int[][] map = terrain.getMap();
-        if (map[y][x] == 1) {
+        if (map[y][x] == 1 || map[y][x] == 2) {
             map[y][x] = -1;
             // Plus tard : ajouter à l'inventaire
             terrainVue.afficherMap(tilePane);
+            terrain.mettreAJourHitboxBlocsSolides();
             System.out.println("Bloc cassé");
         }
     }
@@ -40,6 +41,7 @@ public class Souris {
             map[y][x] = 1;
             // Plus tard : retirer du bon slot d'inventaire
             terrainVue.afficherMap(tilePane);
+            terrain.mettreAJourHitboxBlocsSolides();
             System.out.println("Bloc posé");
         }
     }
