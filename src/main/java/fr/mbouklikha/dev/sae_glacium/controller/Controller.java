@@ -6,6 +6,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
@@ -53,7 +54,10 @@ public class Controller {
     private Yeti yeti;
     private YetiVue yetiVue;
 
+    private Souris souris;
     private final int TAILLE_BLOC = 32;
+    private SourisVue sourisVue;
+
 
 
 
@@ -61,9 +65,14 @@ public class Controller {
     public void initialize() {
         this.env = new Environnement(992, 576);
         new TerrainVue(env.getTerrain(), tilePane);
+        TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
 
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
+        souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
+        sourisVue = new SourisVue(zoneJeu);
+
+
 
         yeti = new Yeti(env, sid);
         yetiVue = new YetiVue(yeti, zoneJeu);
@@ -102,6 +111,10 @@ public class Controller {
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
+            zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
+            zoneJeu.setOnMouseMoved(event -> {
+                sourisVue.majPositionCurseur(event.getX(), event.getY());
+            });
             zoneJeu.requestFocus();
 
             initAnimation();
