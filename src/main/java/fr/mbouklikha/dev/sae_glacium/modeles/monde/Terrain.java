@@ -1,7 +1,30 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.monde;
 
 
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
+
+import java.util.ArrayList;
+
 public class Terrain {
+    private ArrayList<Hitbox> hitboxBlocsSolides;
+    private final int TAILLE_BLOC = 32;
+
+    public Terrain() {
+        hitboxBlocsSolides = new ArrayList<>();
+
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[0].length; x++) {
+                int val = map[y][x];
+                if (val == 1 || val == 2) {
+                    // crée une hitbox pour ce bloc solide
+                    int posX = x * TAILLE_BLOC;
+                    int posY = y * TAILLE_BLOC;
+                    hitboxBlocsSolides.add(new Hitbox(posX, posY, TAILLE_BLOC, TAILLE_BLOC));
+                }
+            }
+        }
+    }
+
     public int[][] map = {
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -25,10 +48,14 @@ public class Terrain {
             {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
     };
 
+
     public int[][] getMap() {
         return map;
     }
 
+    public ArrayList<Hitbox> getHitboxBlocsSolides() {
+        return hitboxBlocsSolides;
+    }
 
 
 
