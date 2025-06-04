@@ -103,6 +103,7 @@ public class Controller {
 
         // ---------------------------------------------------------------------------------
 
+
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
