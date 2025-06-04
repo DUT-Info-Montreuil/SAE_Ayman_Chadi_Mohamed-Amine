@@ -116,7 +116,7 @@ public class Sid extends Acteur {
         int caseX = getX() / tailleBloc;
         int caseY = (newY + 56) / tailleBloc;
 
-        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 && map[caseY][caseX] == 2) {
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 || map[caseY][caseX] == 2) {
             vitesseY = 0;
             enSaut = false;
             setY(caseY * tailleBloc - 56);
