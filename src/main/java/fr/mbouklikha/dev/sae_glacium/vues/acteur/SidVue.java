@@ -13,6 +13,8 @@ public class SidVue {
 
     private Image imageDroite;
     private Image imageGauche;
+    private Image imageDroiteRalenti;
+    private Image imageGaucheRalenti;
     private Image imageBase;
 
     public SidVue(Sid sid, Pane zoneJeu) {
@@ -20,19 +22,19 @@ public class SidVue {
 
         imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_droite.png"));
         imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_gauche.png"));
+        imageDroiteRalenti = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_droite_glace.png"));
+        imageGaucheRalenti = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid_gauche_glace.png"));
         imageBase = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid.png"));
 
         imageView = new ImageView(imageBase);
         imageView.setFitWidth(30);
         imageView.setFitHeight(56);
 
-        // Bind et Listener
         imageView.xProperty().bind(sid.getXProperty().asObject());
         imageView.yProperty().bind(sid.getYProperty().asObject());
 
-        sid.getDirection().addListener((obs, oldDir, newDir) -> {
-            changerImage(newDir);
-        });
+        sid.getDirection().addListener((obs, oldDir, newDir) -> changerImage(newDir));
+        sid.estRalentiProperty().addListener((obs, oldVal, newVal) -> changerImage(sid.getDirection().get()));
 
         zoneJeu.getChildren().add(imageView);
     }
@@ -42,13 +44,12 @@ public class SidVue {
     }
 
     public void changerImage(String direction) {
-
         switch (direction) {
             case "droite":
-                imageView.setImage(imageDroite);
+                imageView.setImage(sid.isEstRalenti() ? imageDroiteRalenti : imageDroite);
                 break;
             case "gauche":
-                imageView.setImage(imageGauche);
+                imageView.setImage(sid.isEstRalenti() ? imageGaucheRalenti : imageGauche);
                 break;
             default:
                 imageView.setImage(imageBase);
@@ -56,4 +57,3 @@ public class SidVue {
         }
     }
 }
-

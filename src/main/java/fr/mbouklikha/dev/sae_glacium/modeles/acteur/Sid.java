@@ -4,17 +4,25 @@ import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.Set;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 
 public class Sid extends Acteur {
 
     private final StringProperty directionProperty = new SimpleStringProperty("base");
+    private final BooleanProperty estRalenti = new SimpleBooleanProperty(false);
+
+    private String objetEnMain = "pioche";
+
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
     private double vitesseY = 0;
+    private Inventaire inventaire;
+    private int finRalenti;
     private Hitbox hitbox;
     private Environnement environnement;
 
@@ -38,18 +46,44 @@ public class Sid extends Acteur {
         directionProperty.set(direction);
     }
 
-    // Méthode deplacer abstract de Acteur
+    public Inventaire getInventaire() {
+        return inventaire;
+    }
+
+
+    // Méthodes deplacer abstract de Acteur
+    public BooleanProperty estRalentiProperty() {
+        return estRalenti;
+    }
+
+    public boolean isEstRalenti() {
+        return estRalenti.get();
+    }
+
+    public void setEstRalenti(boolean ralenti) {
+        estRalenti.set(ralenti);
+    }
+
     @Override
     public void deplacer(Set<KeyCode> touches) {
-        double nouvelleX = getX();
+        int nouvelleX = getX();
+
+        if (finRalenti == 300) {
+            finRalenti = 0;
+            setEstRalenti(false);
+        }
 
         if (touches.contains(KeyCode.D)) {
             nouvelleX += 5;
+            setX(getX() + (isEstRalenti() ? 2 : 4));
             setDirection("droite");
+            if (isEstRalenti()) finRalenti++;
         }
         if (touches.contains(KeyCode.Q)) {
             nouvelleX -= 5;
+            setX(getX() - (isEstRalenti() ? 2 : 4));
             setDirection("gauche");
+            if (isEstRalenti()) finRalenti++;
         }
 
         // Tester collision avant de bouger
@@ -57,9 +91,8 @@ public class Sid extends Acteur {
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
             setX(nouvelleX);
         }
-            hitbox.setPosition(getX(), getY());  //System.out.println(("avant :" + ", " + this.getX() + this.getY() + this.getHitbox().getRectangle()));
+        hitbox.setPosition(getX(), getY());  //System.out.println(("avant :" + ", " + this.getX() + this.getY() + this.getHitbox().getRectangle()));
 
-        // Gestion du saut
         if (touches.contains(KeyCode.SPACE) && !enSaut) {
             vitesseY = SAUT_FORCE;
             enSaut = true;
@@ -67,17 +100,28 @@ public class Sid extends Acteur {
 
         // Met à jour la position de la hitbox
         hitbox.setPosition(getX(), getY());
-    }
 
+    }
 
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
-        double nouvelleY = getY() + vitesseY;
+        int newY = (int)(getY() + vitesseY);
 
-        hitbox.setPosition(getX(), (int) nouvelleY);
+        int caseX = getX() / tailleBloc;
+        int caseY = (newY + 56) / tailleBloc;
+
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1) {
+            vitesseY = 0;
+            enSaut = false;
+            setY(caseY * tailleBloc - 56);
+        } else {
+            setY(newY);
+        }
+
+        hitbox.setPosition(getX(), (int) newY);
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-            setY((int) nouvelleY);
+            setY((int) newY);
         } else {
             if (vitesseY > 0) {
                 // Collision avec le sol, on bloque la chute
@@ -86,8 +130,8 @@ public class Sid extends Acteur {
             vitesseY = 0;
         }
         hitbox.setPosition(getX(), getY());
-    }
 
+    }
 
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
@@ -99,15 +143,12 @@ public class Sid extends Acteur {
     }
 
 
+    public String getObjetEnMain() {
+        return objetEnMain;
+    }
 
-
-
-
-
-
-
-
-
-
+    public void setObjetEnMain(String objet) {
+        this.objetEnMain = objet;
+    }
 
 }
