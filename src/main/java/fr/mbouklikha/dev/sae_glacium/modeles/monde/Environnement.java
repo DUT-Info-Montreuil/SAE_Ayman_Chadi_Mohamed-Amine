@@ -1,8 +1,10 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.monde;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Environnement {
 
@@ -16,6 +18,7 @@ public class Environnement {
         this.acteurs = new ArrayList<>();
         this.terrain = new Terrain(); // création par défaut
     }
+
 
     public int getWidth() {
         return width;
