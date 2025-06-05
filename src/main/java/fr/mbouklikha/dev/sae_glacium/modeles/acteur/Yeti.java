@@ -1,6 +1,7 @@
 // --- Yeti.java ---
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -12,7 +13,7 @@ public class Yeti extends Acteur {
     private static final double GRAVITE = 0.4;
     private static final int HAUTEUR_YETI = 64;
     private static final int VITESSE_X = 2;
-
+    //private Hitbox hitboxYeti;
     private double vitesseY = 0;
     private boolean frappeEnCours = false;
 
@@ -32,7 +33,9 @@ public class Yeti extends Acteur {
     }
 
     @Override
-    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {}
+    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {
+
+    }
 
     public boolean isFrappeEnCours() {
         return frappeEnCours;
@@ -66,6 +69,7 @@ public class Yeti extends Acteur {
             frappeEnCours = false;
             setDirection("immobile");
         }
+
     }
 
     @Override
