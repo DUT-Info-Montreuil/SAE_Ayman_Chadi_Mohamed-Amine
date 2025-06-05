@@ -10,8 +10,13 @@ import javafx.scene.layout.TilePane;
 public class TerrainVue {
     private Terrain terrain;
 
+    private Image glaceImage;
+    private Image neigeImage;
+
     public TerrainVue(Terrain terrain, TilePane tilePane) {
         this.terrain = terrain;
+        this.neigeImage = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/neige.png"));
+        this.glaceImage = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/glace.png"));
         afficherMap(tilePane);
     }
 
@@ -27,14 +32,11 @@ public class TerrainVue {
                 bloc.setFitHeight(32);
 
                 switch (val) {
-                    case 0:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/ciel.png")));
-                        break;
                     case 1:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/neige.png")));
+                        bloc.setImage(neigeImage);
                         break;
                     case 2:
-                        bloc.setImage(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/map/glace.png")));
+                        bloc.setImage(glaceImage);
                         break;
                 }
                 tilePane.getChildren().add(bloc);

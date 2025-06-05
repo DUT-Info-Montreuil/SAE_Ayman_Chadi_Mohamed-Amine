@@ -39,26 +39,23 @@ public class Yeti extends Acteur {
     }
 
     public void suivreEtFrapperSid() {
-        if (sid == null || !sid.estVivant()) {
-            setDirection("immobile");
-            frappeEnCours = false;
-            return;
-        }
-
         int dx = sid.getX() - getX();
         int dy = sid.getY() - getY();
 
-        if (Math.abs(dy) > 50) {
+        if (sid == null || !sid.estVivant()) {
+            setDirection("immobile");
+            frappeEnCours = false;
+        }
+        else if (Math.abs(dy) > 50) {
             frappeEnCours = false;
             setDirection("immobile");
-            return;
         }
-
-        if (Math.abs(dx) <= 20) {
+        else if (Math.abs(dx) <= 20) {
             frappeEnCours = true;
             setDirection(dx > 0 ? "droite" : "gauche");
             sid.setEstRalenti(true);
-        } else if (Math.abs(dx) <= 180) {
+        }
+        else if (Math.abs(dx) <= 180) {
             frappeEnCours = false;
             setX(getX() + (dx > 0 ? VITESSE_X : -VITESSE_X));
             setDirection(dx > 0 ? "droite" : "gauche");
@@ -66,6 +63,7 @@ public class Yeti extends Acteur {
             frappeEnCours = false;
             setDirection("immobile");
         }
+
     }
 
     @Override
