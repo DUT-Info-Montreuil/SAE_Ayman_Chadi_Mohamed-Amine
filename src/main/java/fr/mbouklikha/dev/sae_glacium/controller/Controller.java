@@ -5,6 +5,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Yeti;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
@@ -78,6 +79,11 @@ public class Controller {
         yetiVue = new YetiVue(yeti, zoneJeu);
 
 
+        // Ajoute les acteurs dans l'environnement
+        env.ajouterActeur(sid);
+        env.ajouterActeur(yeti);
+
+
         // -------------------------------------------------------------------------------------------
 
         // Inventaire
@@ -132,11 +138,11 @@ public class Controller {
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // ≈ 60 FPS
                 ev -> {
-                    yeti.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-                    yeti.suivreEtFrapperSid();
-
-                    sid.deplacer(touchesActives);
-                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);  // applique la gravité
+                    for (Acteur a : env.getActeurs()) {
+                        a.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
+                        a.deplacer(touchesActives);
+                    }
+                    yeti.suivreEtFrapperSid(); // logique spécifique au yeti
                     temps++;
                 }
         );
