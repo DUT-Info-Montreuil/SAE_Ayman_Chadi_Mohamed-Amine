@@ -19,9 +19,6 @@ public class Inventaire {
         return items;
     }
 
-    public StringProperty getObjetEnMain() {
-        return objetEnMain;
-    }
 
     public void ajouterItem(Objets objetAAjouter) {
         for (Item item : items) {

@@ -85,7 +85,7 @@ public class InventaireVue {
             if (i < inventaire.getItems().size()) {
                 Item item = inventaire.getItems().get(i);
 
-                String nomImage = item.getObjet().getNom().toLowerCase();
+                String nomImage = item.getObjet().getNom();
                 Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + nomImage + ".png"));
                 images[i].setImage(image);
                 quantites[i].textProperty().bind(Bindings.convert(item.getQuantite()));
@@ -100,9 +100,5 @@ public class InventaireVue {
     public void setObjetEnMainVue(ObjetEnMainVue objetEnMainVue) {
         this.objetEnMainVue = objetEnMainVue;
     }
-
-    public boolean isVisible() {
-        return conteneur.isVisible();
-    }
-
+    
 }

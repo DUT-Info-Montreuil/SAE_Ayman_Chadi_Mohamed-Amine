@@ -94,8 +94,8 @@ public class Controller {
         objetEnMainVue = new ObjetEnMainVue(sid);
 
         // Positionner en haut à droite
-        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
-        objetEnMainVue.getConteneur().setLayoutY(10);
+        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70); // place à 70 pixels du bord droit
+        objetEnMainVue.getConteneur().setLayoutY(10); // place de 10 en partant du haut
 
         zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
 
