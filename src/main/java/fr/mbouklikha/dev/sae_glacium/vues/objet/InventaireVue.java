@@ -41,7 +41,7 @@ public class InventaireVue {
 
             Label quantiteLabel = new Label();
 
-            final int index = i; // pour accéder i dans le lambda
+            final int index = i; // pour accéder i dans le setMouse
 
             caseObjet.setOnMouseClicked(event -> {
                 if (index < inventaire.getItems().size()) {
