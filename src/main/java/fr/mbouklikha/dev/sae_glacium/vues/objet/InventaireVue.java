@@ -90,9 +90,9 @@ public class InventaireVue {
                 images[i].setImage(image);
                 quantites[i].textProperty().bind(Bindings.convert(item.getQuantite()));
             } else {
-                images[i].setImage(null);
-                quantites[i].textProperty().unbind();
-                quantites[i].setText("");
+                images[i].setImage(null);  // Enlève l’image
+                quantites[i].textProperty().unbind();  // Déconnecte la quantité
+                quantites[i].setText("");  // Vide le texte
             }
         }
     }

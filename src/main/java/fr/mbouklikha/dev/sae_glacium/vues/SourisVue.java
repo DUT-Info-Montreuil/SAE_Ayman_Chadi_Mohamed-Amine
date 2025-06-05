@@ -21,12 +21,19 @@ public class SourisVue {
     }
 
     public void majPositionCurseur(double sourisX, double sourisY) {
-        int blocX = (int) sourisX / TAILLE_BLOC;
-        int blocY = (int) sourisY / TAILLE_BLOC;
 
-        curseurBloc.setLayoutX(blocX * TAILLE_BLOC);
-        curseurBloc.setLayoutY(blocY * TAILLE_BLOC);
-        curseurBloc.setVisible(true);
+        int HAUTEUR_ZONE_MORTE = 132; // crée la zone morte en haut pour l'inventaire
+
+        if (sourisY >= HAUTEUR_ZONE_MORTE) {
+            int blocX = (int) sourisX / TAILLE_BLOC;
+            int blocY = (int) sourisY / TAILLE_BLOC;
+
+            curseurBloc.setLayoutX(blocX * TAILLE_BLOC);
+            curseurBloc.setLayoutY(blocY * TAILLE_BLOC);
+            curseurBloc.setVisible(true);
+        } else {
+            curseurBloc.setVisible(false); // cache le curseur si on est dans la zone morte
+        }
     }
 
     public void cacherCurseur() {
