@@ -16,6 +16,7 @@ public class Souris {
     private final TerrainVue terrainVue;
     private final TilePane tilePane;
     private final int DISTANCE_MAX = 128; // distance maximale autorisée (4 bloc)
+    public boolean peutCasser = false;
 
     public Souris(Sid sid, Terrain terrain, TerrainVue terrainVue, TilePane tilePane) {
         this.sid = sid;
@@ -25,13 +26,16 @@ public class Souris {
     }
 
     private void casserBlocXY(int x, int y) {
-        int[][] map = terrain.getMap();
-        if (map[y][x] == 1 || map[y][x] == 2) {
-            map[y][x] = -1;
-            // Plus tard : ajouter à l'inventaire
-            terrainVue.afficherMap(tilePane);
-            terrain.mettreAJourHitboxBlocsSolides();
-            System.out.println("Bloc cassé");
+        if (sid.getObjetEnMain().getNom().contains("pioche") ) {
+            peutCasser = true;
+            int[][] map = terrain.getMap();
+            if (map[y][x] == 1 || map[y][x] == 2) {
+                map[y][x] = -1;
+                // Plus tard : ajouter à l'inventaire
+                terrainVue.afficherMap(tilePane);
+                terrain.mettreAJourHitboxBlocsSolides();
+                System.out.println("Bloc cassé");
+            }
         }
     }
 

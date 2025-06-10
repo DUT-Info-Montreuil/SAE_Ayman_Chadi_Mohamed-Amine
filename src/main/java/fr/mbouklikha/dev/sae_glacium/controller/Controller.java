@@ -4,9 +4,8 @@ import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Yeti;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.*;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
@@ -88,8 +87,8 @@ public class Controller {
 
         // Inventaire
         inventaire = new Inventaire();
-        inventaire.ajouterItem(new Outil("dague"));
-        inventaire.ajouterItem(new Outil("arc"));
+        inventaire.ajouterItem(new Dague());
+        inventaire.ajouterItem(new Arc());
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inventaire);

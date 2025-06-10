@@ -33,10 +33,10 @@ public class Inventaire {
         items.add(objetAAjouter.creerItem());
     }
 
-    public void retirerUnItem(String nom) {
+    public void retirerUnItem(Objets objetARetirer) {
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
-            if (item.getNom().equals(nom)) {
+            if (item.getNom().equals(objetARetirer.getNom())) {
                 item.getQuantite().set(item.getQuantite().get() - 1);
                 if (item.getQuantite().get() <= 0) {
                     items.remove(i);

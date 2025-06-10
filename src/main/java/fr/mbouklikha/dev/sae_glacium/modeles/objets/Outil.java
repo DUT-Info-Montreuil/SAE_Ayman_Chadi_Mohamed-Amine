@@ -1,6 +1,6 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
-public class Outil extends Objets {
+public abstract class Outil extends Objets {
 
     public Outil(String nom) {
         super(nom);
@@ -15,6 +15,8 @@ public class Outil extends Objets {
     public String getType() {
         return "Outil";
     }
+
+    public abstract void fonction();
 
 }
 
