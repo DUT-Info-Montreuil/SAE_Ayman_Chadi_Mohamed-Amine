@@ -2,6 +2,7 @@ package fr.mbouklikha.dev.sae_glacium.controller;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -10,11 +11,12 @@ import javafx.scene.layout.TilePane;
 
 public class Souris {
 
-    private final Sid sid;
-    private final Terrain terrain;
-    private final int TAILLE_BLOC = 32;
-    private final TerrainVue terrainVue;
-    private final TilePane tilePane;
+    private Sid sid;
+    private Terrain terrain;
+    private int TAILLE_BLOC = 32;
+    private TerrainVue terrainVue;
+    private TilePane tilePane;
+    private Inventaire inventaire;
     private final int DISTANCE_MAX = 128; // distance maximale autorisée (4 bloc)
     public boolean peutCasser = false;
 
@@ -26,27 +28,20 @@ public class Souris {
     }
 
     private void casserBlocXY(int x, int y) {
-        if (sid.getObjetEnMain().getNom().contains("pioche") ) {
-            peutCasser = true;
-            int[][] map = terrain.getMap();
-            if (map[y][x] == 1 || map[y][x] == 2) {
-                map[y][x] = -1;
-                // Plus tard : ajouter à l'inventaire
-                terrainVue.afficherMap(tilePane);
-                terrain.mettreAJourHitboxBlocsSolides();
-                System.out.println("Bloc cassé");
-            }
-        }
+        this.sid.getObjetEnMain().fonction(x,y);
+        terrainVue.afficherMap(tilePane);
     }
 
     private void poserBlocXY(int x, int y) {
-        int[][] map = terrain.getMap();
-        if (map[y][x] == -1) {
-            map[y][x] = 1;
-            // Plus tard : retirer du bon slot d'inventaire
-            terrainVue.afficherMap(tilePane);
-            terrain.mettreAJourHitboxBlocsSolides();
-            System.out.println("Bloc posé");
+        if (sid.getObjetEnMain().getNom().contains("glace") || sid.getObjetEnMain().getNom().contains("neige")) {
+            int[][] map = terrain.getMap();
+            if (map[y][x] == -1) {
+                map[y][x] = 1;
+                // Plus tard : retirer du bon slot d'inventaire
+                terrainVue.afficherMap(tilePane);
+                terrain.mettreAJourHitboxBlocsSolides();
+                System.out.println("Bloc posé");
+            }
         }
     }
 

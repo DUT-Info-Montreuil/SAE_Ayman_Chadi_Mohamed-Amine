@@ -2,6 +2,7 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Pioche;
@@ -19,7 +20,7 @@ public class Sid extends Acteur {
     private final StringProperty directionProperty = new SimpleStringProperty("base");
     private final BooleanProperty estRalenti = new SimpleBooleanProperty(false);
 
-    private Objets objetEnMain = new Pioche();
+    private Objets objetEnMain = new Pioche(this.getEnvironnement().getTerrain());
 
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;

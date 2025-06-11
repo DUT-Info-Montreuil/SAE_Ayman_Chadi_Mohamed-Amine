@@ -1,9 +1,11 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
+
 public abstract class Outil extends Objets {
 
-    public Outil(String nom) {
-        super(nom);
+    public Outil(String nom, Terrain terrain) {
+        super(nom, terrain);
 
     }
 
@@ -16,7 +18,6 @@ public abstract class Outil extends Objets {
         return "Outil";
     }
 
-    public abstract void fonction();
 
 }
 

@@ -1,6 +1,6 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
-public abstract class Ressource extends Objets {
+/*public class Ressource extends Objets {
     public Ressource(String nom) {
         super(nom);
     }
@@ -13,4 +13,4 @@ public abstract class Ressource extends Objets {
     public String getType() {
         return "Ressource";
     }
-}
+}*/

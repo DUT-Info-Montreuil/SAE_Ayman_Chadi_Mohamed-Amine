@@ -21,6 +21,7 @@ public class TerrainVue {
     }
 
     public void afficherMap(TilePane tilePane) {
+        System.out.println("afficher map");
         int[][] map = terrain.getMap();
         tilePane.getChildren().clear();
 

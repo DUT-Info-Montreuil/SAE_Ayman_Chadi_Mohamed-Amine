@@ -87,8 +87,7 @@ public class Controller {
 
         // Inventaire
         inventaire = new Inventaire();
-        inventaire.ajouterItem(new Dague());
-        inventaire.ajouterItem(new Arc());
+
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inventaire);
