@@ -16,11 +16,12 @@ public class Yeti extends Acteur {
     //private Hitbox hitboxYeti;
     private double vitesseY = 0;
     private boolean frappeEnCours = false;
+    private int compteurDegats = 0;
 
     private Sid sid;
 
     public Yeti(Environnement env, Sid sid) {
-        super("Yeti", 10, 800, 250, env);
+        super("Yeti", 100, 800, 250, env);
         this.sid = sid;
     }
 
@@ -57,6 +58,16 @@ public class Yeti extends Acteur {
             frappeEnCours = true;
             setDirection(dx > 0 ? "droite" : "gauche");
             sid.setEstRalenti(true);
+
+            if (compteurDegats == 0) {
+                sid.decrementerPv(5);  // dégâts immédiats dès le premier coup
+            }
+
+            compteurDegats++;
+            if (compteurDegats >= 30) { // toutes les 30 frames
+                sid.decrementerPv(5);
+                compteurDegats = 0;
+            }
         }
         else if (Math.abs(dx) <= 180) {
             frappeEnCours = false;

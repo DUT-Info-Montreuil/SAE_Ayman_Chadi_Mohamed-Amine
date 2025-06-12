@@ -7,6 +7,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.vues.PointsDeVieVue;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
@@ -58,6 +59,9 @@ public class Controller {
     private Souris souris;
     private final int TAILLE_BLOC = 32;
     private SourisVue sourisVue;
+    PointsDeVieVue pdvVue;
+
+
 
 
 
@@ -72,6 +76,8 @@ public class Controller {
         sidVue = new SidVue(sid, zoneJeu);
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
         sourisVue = new SourisVue(zoneJeu);
+        pdvVue = new PointsDeVieVue(zoneJeu, sid);
+
 
 
 

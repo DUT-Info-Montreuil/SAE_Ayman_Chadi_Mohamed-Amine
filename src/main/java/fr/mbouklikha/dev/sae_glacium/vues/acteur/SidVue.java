@@ -10,7 +10,6 @@ public class SidVue {
 
     private Sid sid;
     private ImageView imageView;
-
     private Image imageDroite;
     private Image imageGauche;
     private Image imageDroiteRalenti;
@@ -35,6 +34,13 @@ public class SidVue {
 
         sid.getDirection().addListener((obs, oldDir, newDir) -> changerImage(newDir));
         sid.estRalentiProperty().addListener((obs, oldVal, newVal) -> changerImage(sid.getDirection().get()));
+
+        // Sid disparaît quand il meurt
+        sid.getXProperty().addListener((obs, oldVal, newVal) -> {
+            if (!sid.estVivant()) {
+                imageView.setVisible(false);
+            }
+        });
 
         zoneJeu.getChildren().add(imageView);
     }
