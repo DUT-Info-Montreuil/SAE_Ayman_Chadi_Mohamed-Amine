@@ -38,7 +38,6 @@ public class Controller {
     @FXML
     private HBox conteneurInventaire;
 
-    private Inventaire inventaire;
     private InventaireVue inventaireVue;
     private ObjetEnMainVue objetEnMainVue;
 
@@ -69,6 +68,8 @@ public class Controller {
 
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
+
+
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
         sourisVue = new SourisVue(zoneJeu);
 
@@ -86,14 +87,12 @@ public class Controller {
         // -------------------------------------------------------------------------------------------
 
         // Inventaire
-        inventaire = new Inventaire();
-        inventaire.ajouterItem(new Pioche(env.getTerrain(), this.inventaire, sid));
-        inventaire.ajouterItem(new Neige(env.getTerrain(), inventaire, sid));
-        inventaire.ajouterItem(new Glace(env.getTerrain(), inventaire, sid));
+        Inventaire inv = sid.getInventaire();
+        sid.getInventaire().ajouterItem(new Pioche(env.getTerrain(), inv, sid));
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
-        inventaireVue.initialiserCases(inventaire);
-        inventaireVue.mettreAJourInventaire(inventaire);
+        inventaireVue.initialiserCases(inv);
+        inventaireVue.mettreAJourInventaire(inv);
         conteneurInventaire.setVisible(true);
 
 
@@ -127,7 +126,6 @@ public class Controller {
             gameLoop.play();
         });
     }
-
 
 
     private void initAnimation() {
