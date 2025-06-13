@@ -27,22 +27,18 @@ public class Souris {
         this.tilePane = tilePane;
     }
 
-    private void casserBlocXY(int x, int y) {
-        this.sid.getObjetEnMain().fonction(x,y);
+    private void clic_gauche(int x, int y) {
+        if (sid.getObjetEnMain() != null) {
+            sid.getObjetEnMain().fonction(x, y);
+        }
         terrainVue.afficherMap(tilePane);
     }
 
-    private void poserBlocXY(int x, int y) {
-        if (sid.getObjetEnMain().getNom().contains("glace") || sid.getObjetEnMain().getNom().contains("neige")) {
-            int[][] map = terrain.getMap();
-            if (map[y][x] == -1) {
-                map[y][x] = 1;
-                // Plus tard : retirer du bon slot d'inventaire
-                terrainVue.afficherMap(tilePane);
-                terrain.mettreAJourHitboxBlocsSolides();
-                System.out.println("Bloc posé");
-            }
+    private void clic_droit(int x, int y) {
+        if (sid.getObjetEnMain() != null) {
+            sid.getObjetEnMain().fonction(x, y);
         }
+        terrainVue.afficherMap(tilePane);
     }
 
     public void gererClic(MouseEvent event) {
@@ -60,9 +56,9 @@ public class Souris {
 
         if (distanceCarree <= DISTANCE_MAX * DISTANCE_MAX) {
             if (event.getButton() == MouseButton.PRIMARY) {
-                casserBlocXY(blocX, blocY);
+                clic_gauche(blocX, blocY);
             } else if (event.getButton() == MouseButton.SECONDARY) {
-                poserBlocXY(blocX, blocY);
+                clic_droit(blocX, blocY);
             }
         }
     }

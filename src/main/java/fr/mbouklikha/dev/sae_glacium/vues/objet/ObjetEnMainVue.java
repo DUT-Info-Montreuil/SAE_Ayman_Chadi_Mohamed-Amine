@@ -47,7 +47,7 @@ public class ObjetEnMainVue {
         Objets objetEnMain = sid.getObjetEnMain();
         if (objetEnMain == null || objetEnMain.getNom().isEmpty()){
             imageView.setImage(null);
-            labelNom.setText("Rien");
+            labelNom.setText("Vide");
         } else {
             Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + objetEnMain.getNom() + ".png"));
             imageView.setImage(image);

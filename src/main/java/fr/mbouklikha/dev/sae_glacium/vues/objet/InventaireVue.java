@@ -4,7 +4,6 @@ import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -51,14 +50,17 @@ public class InventaireVue {
 
                     // Remet l'ancien objet en main dans l'inventaire
                     Objets ancienObjet = sid.getObjetEnMain();
-                    if (!ancienObjet.equals(nouvelObjet)) {
-                        inventaire.ajouterItem(ancienObjet);
+                    if (ancienObjet == null || !ancienObjet.equals(nouvelObjet)) {
+                        if (ancienObjet != null) {
+                            inventaire.ajouterItem(ancienObjet);
+                        }
                         sid.setObjetEnMain(nouvelObjet);
-                        inventaire.retirerUnItem(nouvelObjet); // Retire 1 du nouvel objet
+                        inventaire.retirerUnItem(nouvelObjet);
                         mettreAJourInventaire(inventaire);
                         objetEnMainVue.mettreAJour();
                         System.out.println("Objet en main : " + nouvelObjet.getNom());
                     }
+
                 }
             });
 

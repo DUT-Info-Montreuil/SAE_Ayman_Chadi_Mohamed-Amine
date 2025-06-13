@@ -13,7 +13,7 @@ public class Yeti extends Acteur {
     private static final double GRAVITE = 0.4;
     private static final int HAUTEUR_YETI = 64;
     private static final int VITESSE_X = 2;
-    //private Hitbox hitboxYeti;
+    private Hitbox hitboxYeti;
     private double vitesseY = 0;
     private boolean frappeEnCours = false;
 
@@ -22,6 +22,7 @@ public class Yeti extends Acteur {
     public Yeti(Environnement env, Sid sid) {
         super("Yeti", 10, 800, 250, env);
         this.sid = sid;
+        this.hitboxYeti = new Hitbox(getX(),getY(),64,64);
     }
 
     public StringProperty getDirection() {

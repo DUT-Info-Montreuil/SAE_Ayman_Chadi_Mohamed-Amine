@@ -20,7 +20,7 @@ public class Sid extends Acteur {
     private final StringProperty directionProperty = new SimpleStringProperty("base");
     private final BooleanProperty estRalenti = new SimpleBooleanProperty(false);
 
-    private Objets objetEnMain = new Pioche(this.getEnvironnement().getTerrain());
+    private Objets objetEnMain = null;
 
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
@@ -35,7 +35,7 @@ public class Sid extends Acteur {
     public Sid(Environnement env) {
         super("Sid", 10, 100, 100, env); // position initiale (100,100)
         this.environnement = env;
-        hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
+        this.hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
 
     }
 
@@ -163,6 +163,7 @@ public class Sid extends Acteur {
     public Objets getObjetEnMain() {
         return objetEnMain;
     }
+
 
     public void setObjetEnMain(Objets objet) {
         this.objetEnMain = objet;
