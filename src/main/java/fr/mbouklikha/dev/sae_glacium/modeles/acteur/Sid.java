@@ -56,6 +56,10 @@ public class Sid extends Acteur {
         return inventaire;
     }
 
+    public Environnement getEnvironnement() {
+        return environnement;
+    }
+
 
     // Méthodes deplacer abstract de Acteur
     public BooleanProperty estRalentiProperty() {
