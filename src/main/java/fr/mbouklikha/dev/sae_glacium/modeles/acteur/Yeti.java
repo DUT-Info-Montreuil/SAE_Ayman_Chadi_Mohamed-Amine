@@ -66,6 +66,18 @@ public class Yeti extends Acteur {
             frappeEnCours = true;
             setDirection(dx > 0 ? "droite" : "gauche");
             sid.setEstRalenti(true);
+
+            if(compteurDegats == 0){
+                sid.decrementerPv(5);
+            }
+
+            compteurDegats ++;
+
+            if(compteurDegats >= 30) {
+                sid.decrementerPv(5);
+                compteurDegats = 0;
+            }
+
         } else if (Math.abs(dx) <= 180) {
             frappeEnCours = false;
             int deplacementX = (dx > 0 ? VITESSE_X : -VITESSE_X);
