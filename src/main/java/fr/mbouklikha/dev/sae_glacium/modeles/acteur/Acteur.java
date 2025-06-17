@@ -1,10 +1,12 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -31,6 +33,10 @@ public abstract class Acteur {
         this.y = new SimpleIntegerProperty(0);
     }*/
 
+
+    public ArrayList<Acteur> getActeursAutour() {
+        return environnement.getActeurs();
+    }
 
     public String getNom(){
         return this.nom;
@@ -100,6 +106,9 @@ public abstract class Acteur {
     public void setEnSaut(boolean s) {
         enSaut = s;
     }
+
+    public abstract Hitbox getHitbox();
+
 
 
     @Override

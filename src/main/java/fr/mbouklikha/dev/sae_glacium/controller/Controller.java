@@ -79,8 +79,6 @@ public class Controller {
 
         sid = new Sid(env);
         sidVue = new SidVue(sid, zoneJeu);
-
-
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
         sourisVue = new SourisVue(zoneJeu);
         pdvVue = new PointsDeVieVue(zoneJeu, sid);

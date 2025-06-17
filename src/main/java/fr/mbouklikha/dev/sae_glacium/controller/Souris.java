@@ -3,6 +3,8 @@ package fr.mbouklikha.dev.sae_glacium.controller;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +48,7 @@ public class Souris {
         int sourisY = (int) event.getY();
         int blocX = sourisX / TAILLE_BLOC;
         int blocY = sourisY / TAILLE_BLOC;
+
 
         int persoX = sid.getX();
         int persoY = sid.getY() + 28;
