@@ -3,6 +3,7 @@ package fr.mbouklikha.dev.sae_glacium.vues;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import fr.mbouklikha.dev.sae_glacium.controller.Souris;
 
 public class SourisVue {
 
@@ -14,6 +15,11 @@ public class SourisVue {
     public SourisVue(Pane zoneJeu) {
         this.zoneJeu = zoneJeu;
         this.curseurBloc = new Rectangle(TAILLE_BLOC, TAILLE_BLOC);
+        /*if ( peutCasser = true) {
+            curseurBloc.setStroke(Color.YELLOW);
+        }else{
+            curseurBloc.setStroke(Color.YELLOW);
+        }*/
         curseurBloc.setStroke(Color.YELLOW);
         curseurBloc.setFill(Color.TRANSPARENT);
         curseurBloc.setVisible(false); // pas visible au début

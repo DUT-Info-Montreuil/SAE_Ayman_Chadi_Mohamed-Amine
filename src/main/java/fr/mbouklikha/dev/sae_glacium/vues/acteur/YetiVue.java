@@ -44,11 +44,22 @@ public class YetiVue {
         // Met à jour l’image à chaque changement de direction ou frappe
         yeti.getDirection().addListener((obs, oldDir, newDir) -> updateImage());
 
+        yeti.getXProperty().addListener((obs, oldVal, newVal) -> {
+            if (!yeti.estVivant()) {
+                imageView.setVisible(false);
+            }
+        });
+
         // AnimationTimer pour mise à jour continue (ex: frappe)
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                updateImage();
+                if (!yeti.estVivant()) {
+                    imageView.setVisible(false);
+                    this.stop();
+                } else {
+                    updateImage();
+                }
             }
         }.start();
 

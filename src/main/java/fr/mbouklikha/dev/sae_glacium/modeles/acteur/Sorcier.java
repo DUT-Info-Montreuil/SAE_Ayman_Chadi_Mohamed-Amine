@@ -1,4 +1,114 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
-public class Sorcier {
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
+import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+public class Sorcier extends Acteur {
+
+    private Sid sid;
+    private static final double GRAVITE = 0.4;
+    private double vitesseY = 0;
+
+    private final StringProperty direction = new SimpleStringProperty("occupe");     // "discute" ou "occupe"
+    private final StringProperty orientation = new SimpleStringProperty("droite");    // "gauche" ou "droite"
+    private boolean occupe = true;
+    private Hitbox hitboxSorcier;
+    private Environnement environnement;
+
+    public Sorcier(Environnement env, Sid sid) {
+        super("Sorcier", 10, 900, 150, env);
+        this.environnement = env;
+        this.sid = sid;
+        this.hitboxSorcier = new Hitbox(getX(), getY(), 45, 62);
+    }
+
+    @Override
+    public void deplacer(Set<KeyCode> touches) {
+        int dx = sid.getX() - getX();
+
+        // Orientation graphique
+        if (dx > 0) {
+            orientation.set("droite");
+        } else {
+            orientation.set("gauche");
+        }
+
+        // Logique "discute" vs "occupe"
+        if (Math.abs(dx) > 50) {
+            occupe = false;
+            direction.set("discute");
+        } else {
+            occupe = true;
+            direction.set("occupe");
+        }
+    }
+
+    @Override
+    public void appliquerGravite(int[][] map, int tailleBloc) {
+        vitesseY += GRAVITE;
+        int newY = (int) (getY() + vitesseY);
+
+        int caseX = getX() / tailleBloc;
+        int caseY = (newY + 62) / tailleBloc;
+
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 || map[caseY][caseX] == 2) {
+            vitesseY = 0;
+            enSaut = false;
+            setY(caseY * tailleBloc - 62);
+        } else {
+            setY(newY);
+        }
+
+        hitboxSorcier.setPosition(getX(), newY);
+        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
+            setY(newY);
+            hitboxSorcier.setPosition(getX(), newY);
+        } else {
+            if (vitesseY > 0) {
+                // Collision avec le sol, on bloque la chute
+                enSaut = false;
+                setY((int) (getY() / tailleBloc) * tailleBloc);
+            }
+            else if (vitesseY < 0) {
+                // En montée : on se cogne la tête
+                // On aligne Sid juste en dessous du bloc touché
+                setY((getY() / tailleBloc + 1) * tailleBloc);
+                vitesseY = 0.1;
+            }
+
+        }
+        hitboxSorcier.setPosition(getX(), getY());
+
+    }
+
+    public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
+        for (Hitbox bloc : blocsSolides) {
+            if (hitboxSorcier.collisionAvec(bloc)) {
+                return true; // collision détectée avec un bloc solide
+            }
+        }
+        return false;
+    }
+
+    public StringProperty getDirection() {
+        return direction;
+    }
+
+    public StringProperty getOrientation() {
+        return orientation;
+    }
+
+    public Hitbox getHitbox() {
+        return hitboxSorcier;
+    }
+
+    public boolean isOccupe() {
+        return occupe;
+    }
 }

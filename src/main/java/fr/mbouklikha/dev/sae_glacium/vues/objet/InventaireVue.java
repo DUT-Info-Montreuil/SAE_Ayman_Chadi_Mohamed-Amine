@@ -3,8 +3,9 @@ package fr.mbouklikha.dev.sae_glacium.vues.objet;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,6 +30,12 @@ public class InventaireVue {
 
     public void initialiserCases(Inventaire inventaire) {
         conteneur.getChildren().clear();
+
+        // Ajout listener pour l'observableList
+        inventaire.getItems().addListener((ListChangeListener<Item>) change -> {
+            mettreAJourInventaire(inventaire);
+        });
+
         for (int i = 0; i < 8; i++) {
             VBox caseObjet = new VBox();
             caseObjet.setSpacing(5);
@@ -40,27 +47,24 @@ public class InventaireVue {
             imageView.setFitHeight(30);
 
             Label quantiteLabel = new Label();
-
-            final int index = i; // pour accéder i dans le setMouse
+            final int index = i;
 
             caseObjet.setOnMouseClicked(event -> {
                 if (index < inventaire.getItems().size()) {
                     Item nouvelItem = inventaire.getItems().get(index);
-                    String nouvelObjet = nouvelItem.getNom();
+                    Objets nouvelObjet = nouvelItem.getObjet();
 
-                    // Remet l'ancien objet en main dans l'inventaire
-                    String ancienObjet = sid.getObjetEnMain();
-                    if (!ancienObjet.equals(nouvelObjet)) {
-                        inventaire.ajouterItem(new Outil(ancienObjet));
+                    Objets ancienObjet = sid.getObjetEnMain();
+                    if (ancienObjet == null || !ancienObjet.equals(nouvelObjet)) {
+                        if (ancienObjet != null) {
+                            inventaire.ajouterItem(ancienObjet);
+                        }
                         sid.setObjetEnMain(nouvelObjet);
-                        inventaire.retirerUnItem(nouvelObjet); // Retire 1 du nouvel objet
-                        mettreAJourInventaire(inventaire);
-                        objetEnMainVue.mettreAJour();
-                        System.out.println("Objet en main : " + nouvelObjet);
+                        inventaire.retirerUnItem(nouvelObjet);
+                        objetEnMainVue.mettreAJour();  // MAJ de l'objet en main
                     }
                 }
             });
-
 
             caseObjet.setOnMouseEntered(e -> caseObjet.setStyle(
                     "-fx-border-color: yellow; -fx-border-width: 2; -fx-padding: 5;"
@@ -69,7 +73,6 @@ public class InventaireVue {
                     "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 5;"
             ));
 
-
             caseObjet.getChildren().addAll(imageView, quantiteLabel);
             conteneur.getChildren().add(caseObjet);
 
@@ -77,6 +80,9 @@ public class InventaireVue {
             images[i] = imageView;
             quantites[i] = quantiteLabel;
         }
+
+        // Mise à jour initiale
+        mettreAJourInventaire(inventaire);
     }
 
 
@@ -85,7 +91,7 @@ public class InventaireVue {
             if (i < inventaire.getItems().size()) {
                 Item item = inventaire.getItems().get(i);
 
-                String nomImage = item.getObjet().getNom();
+                String nomImage = item.getObjet().getNom().toLowerCase();
                 Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + nomImage + ".png"));
                 images[i].setImage(image);
                 quantites[i].textProperty().bind(Bindings.convert(item.getQuantite()));
@@ -100,5 +106,9 @@ public class InventaireVue {
     public void setObjetEnMainVue(ObjetEnMainVue objetEnMainVue) {
         this.objetEnMainVue = objetEnMainVue;
     }
-    
+
+    public boolean isVisible() {
+        return conteneur.isVisible();
+    }
+
 }

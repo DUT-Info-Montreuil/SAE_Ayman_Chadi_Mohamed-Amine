@@ -1,19 +1,23 @@
 package fr.mbouklikha.dev.sae_glacium.controller;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
+import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sorcier;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Yeti;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.*;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.vues.PointsDeVieVue;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
+import fr.mbouklikha.dev.sae_glacium.vues.acteur.SorcierVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
 import fr.mbouklikha.dev.sae_glacium.vues.objet.InventaireVue;
 import fr.mbouklikha.dev.sae_glacium.vues.objet.ObjetEnMainVue;
+import fr.mbouklikha.dev.sae_glacium.vues.objet.TableCraftVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -55,9 +59,18 @@ public class Controller {
     private Yeti yeti;
     private YetiVue yetiVue;
 
+    private Sorcier sorcier;
+    private SorcierVue sorcierVue;
+
     private Souris souris;
     private final int TAILLE_BLOC = 32;
     private SourisVue sourisVue;
+    PointsDeVieVue pdvVue;
+
+
+
+    private TableCraft tableCraft;
+    private TableCraftVue tableCraftVue;
 
 
 
@@ -72,43 +85,68 @@ public class Controller {
         sidVue = new SidVue(sid, zoneJeu);
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
         sourisVue = new SourisVue(zoneJeu);
+        pdvVue = new PointsDeVieVue(zoneJeu, sid);
+
 
 
 
         yeti = new Yeti(env, sid);
         yetiVue = new YetiVue(yeti, zoneJeu);
 
+        // Création du Sorcier et sa vue
+        sorcier = new Sorcier(env, sid);
+        sorcierVue = new SorcierVue(sorcier, zoneJeu);
+
 
         // Ajoute les acteurs dans l'environnement
         env.ajouterActeur(sid);
         env.ajouterActeur(yeti);
+        env.ajouterActeur(sorcier);
+
 
 
         // -------------------------------------------------------------------------------------------
 
         // Inventaire
-        inventaire = new Inventaire();
-        inventaire.ajouterItem(new Outil("dague"));
-        inventaire.ajouterItem(new Outil("arc"));
+        Inventaire inv = sid.getInventaire();
+        sid.getInventaire().ajouter(new Glace(env.getTerrain(), sid.getInventaire(), sid),3);
+        sid.getInventaire().ajouter(new Bois(env.getTerrain(), sid.getInventaire(), sid),20);
+        sid.getInventaire().ajouter(new EclatFeu(env.getTerrain(), sid.getInventaire(), sid),1);
+
+
+
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
-        inventaireVue.initialiserCases(inventaire);
-        inventaireVue.mettreAJourInventaire(inventaire);
+        inventaireVue.initialiserCases(inv);
+        inventaireVue.mettreAJourInventaire(inv);
         conteneurInventaire.setVisible(true);
 
 
         objetEnMainVue = new ObjetEnMainVue(sid);
 
         // Positionner en haut à droite
-        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70); // place à 70 pixels du bord droit
-        objetEnMainVue.getConteneur().setLayoutY(10); // place de 10 en partant du haut
+        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
+        objetEnMainVue.getConteneur().setLayoutY(10);
 
         zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
 
         inventaireVue.setObjetEnMainVue(objetEnMainVue);
 
-        // ---------------------------------------------------------------------------------
 
+
+        // Table de Craft
+        tableCraftVue = new TableCraftVue();
+        zoneJeu.getChildren().add(tableCraftVue.getConteneur());
+        tableCraftVue.getConteneur().setLayoutX(490);
+        tableCraftVue.getConteneur().setLayoutY(10);
+
+        tableCraft = new TableCraft(sid.getInventaire(), sid);
+
+        tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
+        tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
+        tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
+
+        // ---------------------------------------------------------------------------------
 
         // Focus sur les élements du fxml
         tilePane.setFocusTraversable(false);
@@ -122,13 +160,23 @@ public class Controller {
             zoneJeu.setOnMouseMoved(event -> {
                 sourisVue.majPositionCurseur(event.getX(), event.getY());
             });
+
+            zoneJeu.setOnKeyPressed(event -> {
+                touchesActives.add(event.getCode());
+
+                if (event.getCode() == KeyCode.G) {
+                    boolean isVisible = tableCraftVue.isVisible();
+                    tableCraftVue.setVisible(!isVisible);
+                }
+            });
+
+
             zoneJeu.requestFocus();
 
             initAnimation();
             gameLoop.play();
         });
     }
-
 
 
     private void initAnimation() {
@@ -138,11 +186,11 @@ public class Controller {
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // ≈ 60 FPS
                 ev -> {
-                    for (Acteur a : env.getActeurs()) {
-                        a.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-                        a.deplacer(touchesActives);
-                    }
-                    yeti.suivreEtFrapperSid(); // logique spécifique au yeti
+                    yeti.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
+                    yeti.suivreEtFrapperSid();
+
+                    sid.deplacer(touchesActives);
+                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);  // applique la gravité
                     temps++;
                 }
         );

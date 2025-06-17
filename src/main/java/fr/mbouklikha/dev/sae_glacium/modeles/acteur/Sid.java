@@ -2,6 +2,10 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Pioche;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.*;
@@ -16,7 +20,7 @@ public class Sid extends Acteur {
     private final StringProperty directionProperty = new SimpleStringProperty("base");
     private final BooleanProperty estRalenti = new SimpleBooleanProperty(false);
 
-    private String objetEnMain = "pioche";
+    private Objets objetEnMain = null;
 
     private final double GRAVITE = 0.4;
     private final double SAUT_FORCE = -8;
@@ -29,9 +33,10 @@ public class Sid extends Acteur {
 
 
     public Sid(Environnement env) {
-        super("Sid", 10, 100, 100, env); // position initiale (100,100)
+        super("Sid", 50, 100, 100, env); // position initiale (100,100)
         this.environnement = env;
-        hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
+        this.hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
+        this.inventaire = new Inventaire();
 
     }
 
@@ -49,6 +54,10 @@ public class Sid extends Acteur {
 
     public Inventaire getInventaire() {
         return inventaire;
+    }
+
+    public Environnement getEnvironnement() {
+        return environnement;
     }
 
 
@@ -137,7 +146,7 @@ public class Sid extends Acteur {
             else if (vitesseY < 0) {
                 // En montée : on se cogne la tête
                 // On aligne Sid juste en dessous du bloc touché
-                setY(( getY() / tailleBloc + 1) * tailleBloc);
+                setY((getY() / tailleBloc + 1) * tailleBloc);
                 vitesseY = 0.1;
             }
 
@@ -156,11 +165,12 @@ public class Sid extends Acteur {
     }
 
 
-    public String getObjetEnMain() {
+    public Objets getObjetEnMain() {
         return objetEnMain;
     }
 
-    public void setObjetEnMain(String objet) {
+
+    public void setObjetEnMain(Objets objet) {
         this.objetEnMain = objet;
     }
 

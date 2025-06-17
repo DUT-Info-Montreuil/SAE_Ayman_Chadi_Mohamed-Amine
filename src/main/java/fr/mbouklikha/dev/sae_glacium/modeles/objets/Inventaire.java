@@ -20,6 +20,7 @@ public class Inventaire {
     }
 
 
+
     public void ajouterItem(Objets objetAAjouter) {
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
@@ -30,18 +31,68 @@ public class Inventaire {
         items.add(objetAAjouter.creerItem());
     }
 
-    public void retirerUnItem(String nom) {
-        for (int i = 0; i < items.size(); i++) {
-            Item item = items.get(i);
-            if (item.getNom().equals(nom)) {
+    public void retirerUnItem(Objets objetARetirer) {
+        for (Item item : items) {
+            if (item.getNom().equals(objetARetirer.getNom())) {
                 item.getQuantite().set(item.getQuantite().get() - 1);
                 if (item.getQuantite().get() <= 0) {
-                    items.remove(i);
+                    item.supprimer(items);
                 }
                 break;
             }
         }
     }
+
+    public boolean contient(Objets objet) {
+        for (Item item : items) {
+            if (item.getObjet().equals(objet)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean aAssez(Objets objet, int quantiteRequise) {
+        for (Item item : items) {
+            if (item.getNom().equals(objet.getNom())) {
+                return item.getQuantite().get() >= quantiteRequise;
+            }
+        }
+        return false;
+    }
+
+    public void ajouter(Objets objetAAjouter, int quantite) {
+        for (Item item : items) {
+            if (item.getNom().equals(objetAAjouter.getNom())) {
+                item.ajouter(quantite);
+                return;
+            }
+        }
+        items.add(new Item(objetAAjouter, quantite));
+    }
+
+
+    public void retirer(Objets objetARetirer, int quantite) {
+        for (Item item : items) {
+            if (item.getNom().equals(objetARetirer.getNom())) {
+                int actuelle = item.getQuantite().get();
+                int nouvelleQuantite = actuelle - quantite;
+                if (nouvelleQuantite <= 0) {
+                    item.supprimer(items);
+                } else {
+                    item.getQuantite().set(nouvelleQuantite);
+                }
+                break;
+            }
+        }
+    }
+
+
+
+
+
+
+
 
 
 }

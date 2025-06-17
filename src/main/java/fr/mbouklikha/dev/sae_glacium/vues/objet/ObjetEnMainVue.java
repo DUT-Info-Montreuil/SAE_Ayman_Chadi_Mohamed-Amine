@@ -1,6 +1,7 @@
 package fr.mbouklikha.dev.sae_glacium.vues.objet;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -43,14 +44,14 @@ public class ObjetEnMainVue {
     }
 
     public void mettreAJour() {
-        String objetEnMain = sid.getObjetEnMain();
-        if (objetEnMain == null || objetEnMain.isEmpty()) {
+        Objets objetEnMain = sid.getObjetEnMain();
+        if (objetEnMain == null || objetEnMain.getNom().isEmpty()){
             imageView.setImage(null);
-            labelNom.setText("Rien");
+            labelNom.setText("Vide");
         } else {
-            Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + objetEnMain + ".png"));
+            Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + objetEnMain.getNom() + ".png"));
             imageView.setImage(image);
-            labelNom.setText(objetEnMain);
+            labelNom.setText(objetEnMain.getNom());
         }
     }
 
