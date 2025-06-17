@@ -30,7 +30,7 @@ public class SorcierVue {
                 "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/DG.png")));
 
         imageView = new ImageView(imageOccupeDroite);
-        imageView.setFitWidth(54);
+        imageView.setFitWidth(49);
         imageView.setFitHeight(64);
 
         imageView.xProperty().bind(sorcier.getXProperty().asObject());

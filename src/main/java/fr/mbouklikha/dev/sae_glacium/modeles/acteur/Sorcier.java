@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Sorcier extends Acteur {
@@ -17,10 +18,14 @@ public class Sorcier extends Acteur {
     private final StringProperty direction = new SimpleStringProperty("occupe");     // "discute" ou "occupe"
     private final StringProperty orientation = new SimpleStringProperty("droite");    // "gauche" ou "droite"
     private boolean occupe = true;
+    private Hitbox hitboxSorcier;
+    private Environnement environnement;
 
     public Sorcier(Environnement env, Sid sid) {
-        super("Sorcier", 10, 300, 250, env);
+        super("Sorcier", 10, 900, 150, env);
+        this.environnement = env;
         this.sid = sid;
+        this.hitboxSorcier = new Hitbox(getX(), getY(), 45, 62);
     }
 
     @Override
@@ -50,20 +55,45 @@ public class Sorcier extends Acteur {
         int newY = (int) (getY() + vitesseY);
 
         int caseX = getX() / tailleBloc;
-        int caseY = (newY + 64) / tailleBloc;
+        int caseY = (newY + 62) / tailleBloc;
 
-        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1) {
+        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 || map[caseY][caseX] == 2) {
             vitesseY = 0;
             enSaut = false;
-            setY(caseY * tailleBloc - 64);
+            setY(caseY * tailleBloc - 62);
         } else {
             setY(newY);
         }
+
+        hitboxSorcier.setPosition(getX(), newY);
+        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
+            setY(newY);
+            hitboxSorcier.setPosition(getX(), newY);
+        } else {
+            if (vitesseY > 0) {
+                // Collision avec le sol, on bloque la chute
+                enSaut = false;
+                setY((int) (getY() / tailleBloc) * tailleBloc);
+            }
+            else if (vitesseY < 0) {
+                // En montée : on se cogne la tête
+                // On aligne Sid juste en dessous du bloc touché
+                setY((getY() / tailleBloc + 1) * tailleBloc);
+                vitesseY = 0.1;
+            }
+
+        }
+        hitboxSorcier.setPosition(getX(), getY());
+
     }
 
-    @Override
-    public Hitbox getHitbox() {
-        return null;
+    public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
+        for (Hitbox bloc : blocsSolides) {
+            if (hitboxSorcier.collisionAvec(bloc)) {
+                return true; // collision détectée avec un bloc solide
+            }
+        }
+        return false;
     }
 
     public StringProperty getDirection() {
@@ -72,6 +102,10 @@ public class Sorcier extends Acteur {
 
     public StringProperty getOrientation() {
         return orientation;
+    }
+
+    public Hitbox getHitbox() {
+        return hitboxSorcier;
     }
 
     public boolean isOccupe() {
