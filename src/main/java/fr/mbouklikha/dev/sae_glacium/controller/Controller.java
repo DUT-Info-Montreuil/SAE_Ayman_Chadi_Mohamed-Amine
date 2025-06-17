@@ -100,6 +100,7 @@ public class Controller {
         env.ajouterActeur(sorcier);
 
 
+
         // -------------------------------------------------------------------------------------------
 
         // Inventaire
