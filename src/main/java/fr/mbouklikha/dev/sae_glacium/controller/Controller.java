@@ -186,11 +186,11 @@ public class Controller {
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // ≈ 60 FPS
                 ev -> {
-                    yeti.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-                    yeti.suivreEtFrapperSid();
-
-                    sid.deplacer(touchesActives);
-                    sid.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);  // applique la gravité
+                    for (Acteur a : env.getActeurs()) {
+                        a.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
+                        a.deplacer(touchesActives);
+                    }
+                    yeti.suivreEtFrapperSid(); // logique spécifique au yeti
                     temps++;
                 }
         );
