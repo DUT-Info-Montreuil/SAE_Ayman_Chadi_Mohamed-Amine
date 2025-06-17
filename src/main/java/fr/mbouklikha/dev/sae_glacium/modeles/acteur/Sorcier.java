@@ -1,5 +1,6 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
+import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -58,6 +59,11 @@ public class Sorcier extends Acteur {
         } else {
             setY(newY);
         }
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return null;
     }
 
     public StringProperty getDirection() {

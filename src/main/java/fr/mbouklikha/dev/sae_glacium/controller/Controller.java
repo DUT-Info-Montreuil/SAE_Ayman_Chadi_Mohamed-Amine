@@ -104,6 +104,7 @@ public class Controller {
         // Inventaire
         Inventaire inv = sid.getInventaire();
         sid.getInventaire().ajouterItem(new Pioche(env.getTerrain(), inv, sid));
+        sid.getInventaire().ajouterItem(new Dague(env.getTerrain(), inv, sid));
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inv);

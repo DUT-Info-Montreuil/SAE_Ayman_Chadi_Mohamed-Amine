@@ -19,7 +19,6 @@ public class Yeti extends Acteur {
 
     private Sid sid;
     private final Environnement environnement;
-    private final Sid sid;
     private final Hitbox hitboxYeti;
 
     public Yeti(Environnement env, Sid sid) {
