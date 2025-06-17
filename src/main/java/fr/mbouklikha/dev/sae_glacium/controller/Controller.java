@@ -91,6 +91,7 @@ public class Controller {
         inventaire.ajouterItem(new Neige(env.getTerrain(), inventaire, sid));
         inventaire.ajouterItem(new Glace(env.getTerrain(), inventaire, sid));
         inventaire.ajouterItem(new Dague(env.getTerrain(), inventaire, sid));
+        inventaire.ajouterItem(new Arc(env.getTerrain(), inventaire, sid));
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inventaire);

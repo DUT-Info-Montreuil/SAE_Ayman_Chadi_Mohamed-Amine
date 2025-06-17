@@ -52,8 +52,7 @@ public class Yeti extends Acteur {
         if (sid == null || !sid.estVivant()) {
             setDirection("immobile");
             frappeEnCours = false;
-            return;
-        }
+        } else {
 
         int dx = sid.getX() - getX();
         int dy = sid.getY() - getY();
@@ -89,6 +88,7 @@ public class Yeti extends Acteur {
             frappeEnCours = false;
             setDirection("immobile");
         }
+        }
 
         // Mise à jour finale de la hitbox
         hitboxYeti.setPosition(getX(), getY());
@@ -105,16 +105,14 @@ public class Yeti extends Acteur {
         if (caseY >= map.length || caseX >= map[0].length || caseX < 0) {
             setY(newY);
             hitboxYeti.setPosition(getX(), newY);
-            return;
-        }
-
-        hitboxYeti.setPosition(getX(), newY);
-        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-            setY(newY);
         } else {
-            vitesseY = 0;
+            hitboxYeti.setPosition(getX(), newY);
+            if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
+                setY(newY);
+            } else {
+                vitesseY = 0;
+            }
         }
-
         hitboxYeti.setPosition(getX(), getY());
     }
 
