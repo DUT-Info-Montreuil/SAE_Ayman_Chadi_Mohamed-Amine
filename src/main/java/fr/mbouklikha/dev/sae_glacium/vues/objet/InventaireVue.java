@@ -5,6 +5,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Item;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -63,6 +64,13 @@ public class InventaireVue {
 
                 }
             });
+
+            inventaire.getItems().addListener((ListChangeListener<Item>) change -> {
+                while (change.next()) {
+                    mettreAJourInventaire(inventaire);
+                }
+            });
+
 
 
             caseObjet.setOnMouseEntered(e -> caseObjet.setStyle(

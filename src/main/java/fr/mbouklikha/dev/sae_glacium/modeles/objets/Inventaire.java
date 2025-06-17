@@ -34,17 +34,29 @@ public class Inventaire {
     }
 
     public void retirerUnItem(Objets objetARetirer) {
-        for (int i = 0; i < items.size(); i++) {
-            Item item = items.get(i);
+        for (Item item : items) {
             if (item.getNom().equals(objetARetirer.getNom())) {
                 item.getQuantite().set(item.getQuantite().get() - 1);
                 if (item.getQuantite().get() <= 0) {
-                    items.remove(i);
+                    item.supprimer(items);
                 }
                 break;
             }
         }
     }
+
+    public boolean contient(Objets objet) {
+        for (Item item : items) {
+            if (item.getObjet().equals(objet)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
 
 
 }

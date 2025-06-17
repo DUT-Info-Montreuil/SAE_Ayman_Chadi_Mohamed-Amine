@@ -86,16 +86,12 @@ public class Controller {
         // -------------------------------------------------------------------------------------------
 
         // Inventaire
-        inventaire = new Inventaire();
-        inventaire.ajouterItem(new Pioche(env.getTerrain(), this.inventaire, sid));
-        inventaire.ajouterItem(new Neige(env.getTerrain(), inventaire, sid));
-        inventaire.ajouterItem(new Glace(env.getTerrain(), inventaire, sid));
-        inventaire.ajouterItem(new Dague(env.getTerrain(), inventaire, sid));
-        inventaire.ajouterItem(new Arc(env.getTerrain(), inventaire, sid));
+        Inventaire inv = sid.getInventaire();
+        sid.getInventaire().ajouterItem(new Pioche(env.getTerrain(), inv, sid));
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
-        inventaireVue.initialiserCases(inventaire);
-        inventaireVue.mettreAJourInventaire(inventaire);
+        inventaireVue.initialiserCases(inv);
+        inventaireVue.mettreAJourInventaire(inv);
         conteneurInventaire.setVisible(true);
 
 
