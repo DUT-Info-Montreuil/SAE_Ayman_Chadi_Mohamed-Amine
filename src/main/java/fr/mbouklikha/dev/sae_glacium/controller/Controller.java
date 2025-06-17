@@ -17,6 +17,7 @@ import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
 import fr.mbouklikha.dev.sae_glacium.vues.objet.InventaireVue;
 import fr.mbouklikha.dev.sae_glacium.vues.objet.ObjetEnMainVue;
+import fr.mbouklikha.dev.sae_glacium.vues.objet.TableCraftVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -67,6 +68,9 @@ public class Controller {
     PointsDeVieVue pdvVue;
 
 
+
+
+    private TableCraftVue tableCraftVue;
 
 
 
@@ -122,6 +126,14 @@ public class Controller {
 
         inventaireVue.setObjetEnMainVue(objetEnMainVue);
 
+
+
+        tableCraftVue = new TableCraftVue();
+        zoneJeu.getChildren().add(tableCraftVue.getConteneur());
+        tableCraftVue.getConteneur().setLayoutX(100); // Positionne où tu veux
+        tableCraftVue.getConteneur().setLayoutY(100);
+
+
         // ---------------------------------------------------------------------------------
 
         // Focus sur les élements du fxml
@@ -136,6 +148,17 @@ public class Controller {
             zoneJeu.setOnMouseMoved(event -> {
                 sourisVue.majPositionCurseur(event.getX(), event.getY());
             });
+
+            zoneJeu.setOnKeyPressed(event -> {
+                touchesActives.add(event.getCode());
+
+                if (event.getCode() == KeyCode.G) {
+                    boolean isVisible = tableCraftVue.isVisible();
+                    tableCraftVue.setVisible(!isVisible);
+                }
+            });
+
+
             zoneJeu.requestFocus();
 
             initAnimation();

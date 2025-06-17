@@ -30,6 +30,12 @@ public class InventaireVue {
 
     public void initialiserCases(Inventaire inventaire) {
         conteneur.getChildren().clear();
+
+        // Ajout listener pour l'observableList
+        inventaire.getItems().addListener((ListChangeListener<Item>) change -> {
+            mettreAJourInventaire(inventaire);
+        });
+
         for (int i = 0; i < 8; i++) {
             VBox caseObjet = new VBox();
             caseObjet.setSpacing(5);
@@ -41,15 +47,13 @@ public class InventaireVue {
             imageView.setFitHeight(30);
 
             Label quantiteLabel = new Label();
-
-            final int index = i; // pour accéder i dans le lambda
+            final int index = i;
 
             caseObjet.setOnMouseClicked(event -> {
                 if (index < inventaire.getItems().size()) {
                     Item nouvelItem = inventaire.getItems().get(index);
                     Objets nouvelObjet = nouvelItem.getObjet();
 
-                    // Remet l'ancien objet en main dans l'inventaire
                     Objets ancienObjet = sid.getObjetEnMain();
                     if (ancienObjet == null || !ancienObjet.equals(nouvelObjet)) {
                         if (ancienObjet != null) {
@@ -57,21 +61,10 @@ public class InventaireVue {
                         }
                         sid.setObjetEnMain(nouvelObjet);
                         inventaire.retirerUnItem(nouvelObjet);
-                        mettreAJourInventaire(inventaire);
-                        objetEnMainVue.mettreAJour();
-                        System.out.println("Objet en main : " + nouvelObjet.getNom());
+                        objetEnMainVue.mettreAJour();  // MAJ de l'objet en main
                     }
-
                 }
             });
-
-            inventaire.getItems().addListener((ListChangeListener<Item>) change -> {
-                while (change.next()) {
-                    mettreAJourInventaire(inventaire);
-                }
-            });
-
-
 
             caseObjet.setOnMouseEntered(e -> caseObjet.setStyle(
                     "-fx-border-color: yellow; -fx-border-width: 2; -fx-padding: 5;"
@@ -80,7 +73,6 @@ public class InventaireVue {
                     "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 5;"
             ));
 
-
             caseObjet.getChildren().addAll(imageView, quantiteLabel);
             conteneur.getChildren().add(caseObjet);
 
@@ -88,6 +80,9 @@ public class InventaireVue {
             images[i] = imageView;
             quantites[i] = quantiteLabel;
         }
+
+        // Mise à jour initiale
+        mettreAJourInventaire(inventaire);
     }
 
 

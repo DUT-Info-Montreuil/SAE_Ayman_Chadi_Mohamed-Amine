@@ -12,6 +12,7 @@ public abstract class Objets {
     private Inventaire inventaire;
     private Sid sid;
 
+
     public Objets(String nom, Terrain terrain, Inventaire inventaire, Sid sid) {
         this.nom = nom;
         this.terrain = terrain;
