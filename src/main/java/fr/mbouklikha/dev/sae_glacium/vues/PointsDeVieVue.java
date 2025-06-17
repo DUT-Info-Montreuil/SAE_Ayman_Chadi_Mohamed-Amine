@@ -31,6 +31,7 @@ public class PointsDeVieVue {
             flammes[i].setFitWidth(40);
             flammes[i].setFitHeight(40);
             conteneurFlammes.getChildren().add(flammes[i]);
+
         }
 
         zoneJeu.getChildren().add(conteneurFlammes);
