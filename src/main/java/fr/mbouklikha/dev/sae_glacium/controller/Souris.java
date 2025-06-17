@@ -3,6 +3,9 @@ package fr.mbouklikha.dev.sae_glacium.controller;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -28,15 +31,17 @@ public class Souris {
     }
 
     private void clic_gauche(int x, int y) {
-        if (sid.getObjetEnMain() != null) {
-            sid.getObjetEnMain().fonction(x, y);
+        Objets objets = sid.getObjetEnMain();
+        if (objets != null && objets instanceof Outil) {
+            objets.fonction(x, y);
         }
         terrainVue.afficherMap(tilePane);
     }
 
     private void clic_droit(int x, int y) {
-        if (sid.getObjetEnMain() != null) {
-            sid.getObjetEnMain().fonction(x, y);
+        Objets objets = sid.getObjetEnMain();
+        if (objets != null && objets instanceof Ressource) {
+            objets.fonction(x, y);
         }
         terrainVue.afficherMap(tilePane);
     }
