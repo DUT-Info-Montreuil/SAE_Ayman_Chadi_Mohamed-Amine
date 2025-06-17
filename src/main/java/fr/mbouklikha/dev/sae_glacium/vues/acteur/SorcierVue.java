@@ -21,13 +21,13 @@ public class SorcierVue {
         this.sorcier = sorcier;
 
         imageOccupeDroite = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/D/O.png")));
+                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/OD.png")));
         imageOccupeGauche = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/G/O.png")));
+                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/OG.png")));
         imageDiscuteDroite = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/D/D.png")));
+                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/DD.png")));
         imageDiscuteGauche = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/G/D.png")));
+                "/fr/mbouklikha/dev/sae_glacium/images/Sorcier/DG.png")));
 
         imageView = new ImageView(imageOccupeDroite);
         imageView.setFitWidth(54);
