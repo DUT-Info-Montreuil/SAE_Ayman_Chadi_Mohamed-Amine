@@ -23,6 +23,7 @@ public class Inventaire {
         return objetEnMain;
     }
 
+
     public void ajouterItem(Objets objetAAjouter) {
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
@@ -53,6 +54,44 @@ public class Inventaire {
         }
         return false;
     }
+
+    public boolean aAssez(Objets objet, int quantiteRequise) {
+        for (Item item : items) {
+            if (item.getNom().equals(objet.getNom())) {
+                return item.getQuantite().get() >= quantiteRequise;
+            }
+        }
+        return false;
+    }
+
+    public void ajouter(Objets objetAAjouter, int quantite) {
+        for (Item item : items) {
+            if (item.getNom().equals(objetAAjouter.getNom())) {
+                item.ajouter(quantite);
+                return;
+            }
+        }
+        items.add(new Item(objetAAjouter, quantite));
+    }
+
+
+    public void retirer(Objets objetARetirer, int quantite) {
+        for (Item item : items) {
+            if (item.getNom().equals(objetARetirer.getNom())) {
+                int actuelle = item.getQuantite().get();
+                int nouvelleQuantite = actuelle - quantite;
+                if (nouvelleQuantite <= 0) {
+                    item.supprimer(items);
+                } else {
+                    item.getQuantite().set(nouvelleQuantite);
+                }
+                break;
+            }
+        }
+    }
+
+
+
 
 
 

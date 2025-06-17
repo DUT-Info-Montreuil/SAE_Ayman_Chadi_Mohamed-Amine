@@ -58,7 +58,7 @@ public class Controller {
     private final int TAILLE_BLOC = 32;
     private SourisVue sourisVue;
 
-
+    private TableCraft tableCraft;
     private TableCraftVue tableCraftVue;
 
 
@@ -92,7 +92,12 @@ public class Controller {
 
         // Inventaire
         Inventaire inv = sid.getInventaire();
-        sid.getInventaire().ajouterItem(new Pioche(env.getTerrain(), inv, sid));
+        sid.getInventaire().ajouter(new Glace(env.getTerrain(), sid.getInventaire(), sid),3);
+        sid.getInventaire().ajouter(new Bois(env.getTerrain(), sid.getInventaire(), sid),20);
+        sid.getInventaire().ajouter(new EclatFeu(env.getTerrain(), sid.getInventaire(), sid),1);
+
+
+
 
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inv);
@@ -112,11 +117,17 @@ public class Controller {
 
 
 
+        // Table de Craft
         tableCraftVue = new TableCraftVue();
         zoneJeu.getChildren().add(tableCraftVue.getConteneur());
-        tableCraftVue.getConteneur().setLayoutX(100); // Positionne où tu veux
-        tableCraftVue.getConteneur().setLayoutY(100);
+        tableCraftVue.getConteneur().setLayoutX(490);
+        tableCraftVue.getConteneur().setLayoutY(10);
 
+        tableCraft = new TableCraft(sid.getInventaire(), sid);
+
+        tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
+        tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
+        tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
 
         // ---------------------------------------------------------------------------------
 

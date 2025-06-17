@@ -2,16 +2,19 @@ package fr.mbouklikha.dev.sae_glacium.vues.objet;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class TableCraftVue {
-    private VBox conteneur; // Le conteneur principal
-    private GridPane grilleCraft;
-    private ImageView[][] slots; // 3x3
-    private ImageView slotResultat;
-    private Button boutonCrafter;
+
+    private VBox conteneur;
+    private HBox ligneCraft;
+
+    private Button boutonPioche;
+    private Button boutonDague;
+    private Button boutonArc;
 
     public TableCraftVue() {
         conteneur = new VBox(10);
@@ -19,37 +22,29 @@ public class TableCraftVue {
         conteneur.setStyle("-fx-background-color: rgba(0,0,0,0.7); -fx-padding: 10; -fx-border-color: white; -fx-border-width: 2;");
         conteneur.setVisible(false);
 
-        grilleCraft = new GridPane();
-        grilleCraft.setHgap(5);
-        grilleCraft.setVgap(5);
-        grilleCraft.setAlignment(Pos.CENTER);
+        ligneCraft = new HBox(10);
+        ligneCraft.setAlignment(Pos.CENTER);
 
-        slots = new ImageView[3][3];
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                ImageView slot = new ImageView();
-                slot.setFitWidth(40);
-                slot.setFitHeight(40);
-                slot.setPreserveRatio(true);
+        // ✅ Chargement des images
+        ImageView imagePioche = new ImageView(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/pioche.png")));
+        imagePioche.setFitWidth(32);
+        imagePioche.setFitHeight(32);
 
-                StackPane slotPane = new StackPane(slot);
-                slotPane.setStyle("-fx-border-color: gray; -fx-background-color: white;");
-                slotPane.setPrefSize(40, 40);
+        ImageView imageDague = new ImageView(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/dague.png")));
+        imageDague.setFitWidth(32);
+        imageDague.setFitHeight(32);
 
-                slots[row][col] = slot;
-                grilleCraft.add(slotPane, col, row);
-            }
-        }
+        ImageView imageArc = new ImageView(new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/arc.png")));
+        imageArc.setFitWidth(32);
+        imageArc.setFitHeight(32);
 
-        // Résultat
-        slotResultat = new ImageView();
-        slotResultat.setFitWidth(40);
-        slotResultat.setFitHeight(40);
-        slotResultat.setStyle("-fx-border-color: gold;");
+        // ✅ Boutons avec image (et texte si tu veux)
+        boutonPioche = new Button("", imagePioche); // texte vide + image
+        boutonDague = new Button("", imageDague);
+        boutonArc = new Button("", imageArc);
 
-        boutonCrafter = new Button("Crafter");
-
-        conteneur.getChildren().addAll(new Label("Table de craft"), grilleCraft, boutonCrafter, slotResultat);
+        ligneCraft.getChildren().addAll(boutonPioche, boutonDague, boutonArc);
+        conteneur.getChildren().addAll(ligneCraft);
     }
 
     public VBox getConteneur() {
@@ -62,5 +57,17 @@ public class TableCraftVue {
 
     public boolean isVisible() {
         return conteneur.isVisible();
+    }
+
+    public Button getBoutonPioche() {
+        return boutonPioche;
+    }
+
+    public Button getBoutonDague() {
+        return boutonDague;
+    }
+
+    public Button getBoutonArc() {
+        return boutonArc;
     }
 }
