@@ -14,6 +14,7 @@ public class Arc extends Outil {
 
     }
 
+
     public void fonction(int x, int y){
         int sourisX = x * 32;
         int sourisY = y * 32;
@@ -29,12 +30,12 @@ public class Arc extends Outil {
             for (Acteur a : getSid().getActeursAutour()) {
                 if (a instanceof Yeti yeti) {
                     if (yeti.getHitbox().contientPoint(sourisX, sourisY)) {
-                            yeti.decrementerPv(30);
-                            if (yeti.getPv() > 0) {
-                                System.out.println("Flèche tiré ! PV restants : " + yeti.getPv());
-                            } else {
+                        yeti.decrementerPv(30);
+                        if (yeti.getPv() > 0) {
+                            System.out.println("Flèche tiré ! PV restants : " + yeti.getPv());
+                        } else {
                             System.out.println("Yeti mort ! ");
-                            }
+                        }
                     }
                 }
             }
