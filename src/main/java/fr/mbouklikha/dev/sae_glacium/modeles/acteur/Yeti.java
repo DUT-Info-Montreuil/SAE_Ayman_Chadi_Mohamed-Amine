@@ -51,7 +51,7 @@ public class Yeti extends Acteur {
     }
 
     public void suivreEtFrapperSid() {
-        if (sid == null || !sid.estVivant()) {
+        if (getPv() < 0 || sid == null || !sid.estVivant()) {
             setDirection("immobile");
             frappeEnCours = false;
         } else {
@@ -89,7 +89,7 @@ public class Yeti extends Acteur {
         } else {
             frappeEnCours = false;
             setDirection("immobile");
-        }
+            }
         }
 
         // Mise à jour finale de la hitbox

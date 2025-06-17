@@ -54,7 +54,12 @@ public class YetiVue {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                updateImage();
+                if (!yeti.estVivant()) {
+                    imageView.setVisible(false);
+                    this.stop();
+                } else {
+                    updateImage();
+                }
             }
         }.start();
 

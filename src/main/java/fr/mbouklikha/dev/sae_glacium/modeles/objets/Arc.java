@@ -7,12 +7,13 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 
 public class Arc extends Outil {
 
-    private final int DISTANCE_MAX = 128;
+    private final int DISTANCE_MAX = 320;
 
     public Arc(Terrain terrain, Inventaire inventaire, Sid sid){
         super("arc", terrain, inventaire, sid);
 
     }
+
 
     public void fonction(int x, int y){
         int sourisX = x * 32;
@@ -29,8 +30,12 @@ public class Arc extends Outil {
             for (Acteur a : getSid().getActeursAutour()) {
                 if (a instanceof Yeti yeti) {
                     if (yeti.getHitbox().contientPoint(sourisX, sourisY)) {
-                            yeti.decrementerPv(30);
+                        yeti.decrementerPv(30);
+                        if (yeti.getPv() > 0) {
                             System.out.println("Flèche tiré ! PV restants : " + yeti.getPv());
+                        } else {
+                            System.out.println("Yeti mort ! ");
+                        }
                     }
                 }
             }

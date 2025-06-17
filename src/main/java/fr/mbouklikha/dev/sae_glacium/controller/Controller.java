@@ -43,7 +43,7 @@ public class Controller {
     @FXML
     private HBox conteneurInventaire;
 
-
+    private Inventaire inventaire;
     private InventaireVue inventaireVue;
     private ObjetEnMainVue objetEnMainVue;
 
