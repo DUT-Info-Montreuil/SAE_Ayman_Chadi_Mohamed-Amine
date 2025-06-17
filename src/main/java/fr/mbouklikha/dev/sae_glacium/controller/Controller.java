@@ -1,6 +1,7 @@
 package fr.mbouklikha.dev.sae_glacium.controller;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
+import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sorcier;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Yeti;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
@@ -8,6 +9,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.objets.*;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
+import fr.mbouklikha.dev.sae_glacium.vues.acteur.SorcierVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.YetiVue;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 
@@ -25,7 +27,6 @@ import javafx.util.Duration;
 
 import java.util.HashSet;
 import java.util.Set;
-
 
 public class Controller {
 
@@ -53,6 +54,9 @@ public class Controller {
     private Yeti yeti;
     private YetiVue yetiVue;
 
+    private Sorcier sorcier;
+    private SorcierVue sorcierVue;
+
     private Souris souris;
     private final int TAILLE_BLOC = 32;
     private SourisVue sourisVue;
@@ -77,6 +81,10 @@ public class Controller {
 
         yeti = new Yeti(env, sid);
         yetiVue = new YetiVue(yeti, zoneJeu);
+
+        // Création du Sorcier et sa vue
+        sorcier = new Sorcier(env, sid);
+        sorcierVue = new SorcierVue(sorcier, zoneJeu);
 
 
         // Ajoute les acteurs dans l'environnement
