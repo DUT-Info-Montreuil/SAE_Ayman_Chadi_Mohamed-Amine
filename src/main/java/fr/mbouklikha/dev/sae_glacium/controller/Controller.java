@@ -7,6 +7,8 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.*;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.vues.PointsDeVieVue;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SorcierVue;
@@ -28,6 +30,7 @@ import javafx.util.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class Controller {
 
     @FXML
@@ -39,6 +42,7 @@ public class Controller {
     @FXML
     private HBox conteneurInventaire;
 
+    private Inventaire inventaire;
     private InventaireVue inventaireVue;
     private ObjetEnMainVue objetEnMainVue;
 
@@ -60,6 +64,9 @@ public class Controller {
     private Souris souris;
     private final int TAILLE_BLOC = 32;
     private SourisVue sourisVue;
+    PointsDeVieVue pdvVue;
+
+
 
 
 
@@ -76,6 +83,8 @@ public class Controller {
 
         souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
         sourisVue = new SourisVue(zoneJeu);
+        pdvVue = new PointsDeVieVue(zoneJeu, sid);
+
 
 
 
@@ -134,6 +143,7 @@ public class Controller {
             gameLoop.play();
         });
     }
+
 
 
     private void initAnimation() {

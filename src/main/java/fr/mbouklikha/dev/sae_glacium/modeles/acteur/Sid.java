@@ -33,7 +33,7 @@ public class Sid extends Acteur {
 
 
     public Sid(Environnement env) {
-        super("Sid", 10, 100, 100, env); // position initiale (100,100)
+        super("Sid", 50, 100, 100, env); // position initiale (100,100)
         this.environnement = env;
         this.hitbox = new Hitbox(getX(), getY(), 25, 55); // taille du perso
         this.inventaire = new Inventaire();
@@ -142,7 +142,7 @@ public class Sid extends Acteur {
             else if (vitesseY < 0) {
                 // En montée : on se cogne la tête
                 // On aligne Sid juste en dessous du bloc touché
-                setY(( getY() / tailleBloc + 1) * tailleBloc);
+                setY((getY() / tailleBloc + 1) * tailleBloc);
                 vitesseY = 0.1;
             }
 

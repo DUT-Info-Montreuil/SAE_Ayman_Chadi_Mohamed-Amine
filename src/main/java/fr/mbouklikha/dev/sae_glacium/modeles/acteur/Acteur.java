@@ -11,7 +11,7 @@ import java.util.Set;
 public abstract class Acteur {
 
     private String nom;
-    private int pv;
+    protected IntegerProperty pv;
     private Environnement environnement;
     private IntegerProperty x, y;
     protected boolean enSaut = false;
@@ -20,16 +20,16 @@ public abstract class Acteur {
         this.nom = nom;
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
-        this.pv=pv;
+        this.pv= new SimpleIntegerProperty(pv);
         this.environnement = environnement;
     }
 
-    public Acteur(String nom, int pv, Environnement environnement) {
+    /*public Acteur(String nom, int pv, Environnement environnement) {
         this.nom = nom;
         this.pv = pv;
         this.x= new SimpleIntegerProperty(0);
         this.y = new SimpleIntegerProperty(0);
-    }
+    }*/
 
 
     public String getNom(){
@@ -37,11 +37,15 @@ public abstract class Acteur {
     }
 
     public int getPv() {
-        return pv;
+        return pv.get();
     }
 
     public int getX() {
         return x.getValue();
+    }
+
+    public IntegerProperty pvProperty() {
+        return pv;
     }
 
     public IntegerProperty getXProperty(){
@@ -71,19 +75,19 @@ public abstract class Acteur {
 
 
     public void decrementerPv(int n) {
-        this.pv-=n;
+        this.pv.set(getPv() - n);
     }
 
     public void incrementerPv(int n) {
-        this.pv+=n;
+        this.pv.set(getPv() + n);
     }
 
     public boolean estVivant() {
-        return this.pv>0;
+        return getPv() > 0;
     }
 
     public void meurt(){
-        this.pv=0;
+        this.pv.set(0);
     }
 
     public abstract void deplacer(Set<KeyCode> touches);
