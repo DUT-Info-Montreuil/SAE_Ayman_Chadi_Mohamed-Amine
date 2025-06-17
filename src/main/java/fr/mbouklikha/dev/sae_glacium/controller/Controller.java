@@ -97,6 +97,7 @@ public class Controller {
         // Ajoute les acteurs dans l'environnement
         env.ajouterActeur(sid);
         env.ajouterActeur(yeti);
+        env.ajouterActeur(sorcier);
 
 
         // -------------------------------------------------------------------------------------------
