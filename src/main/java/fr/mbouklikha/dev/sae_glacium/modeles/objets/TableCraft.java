@@ -2,75 +2,67 @@ package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TableCraft {
-    private Objets[][] grille = new Objets[3][3];
-    private List<CraftRecette> recettes;
+
+    private Inventaire inventaire;
     private Sid sid;
 
-    Objets bois = new Bois(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-    Objets glace = new Glace(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-    Objets fer = new Fer(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-    Objets eclatFeu = new EclatFeu(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-
-    Objets pioche = new Pioche(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-    Objets dague = new Dague(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-    Objets arcFeu = new Arc(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-
-    public TableCraft(Sid sid) {
+    public TableCraft(Inventaire inventaire, Sid sid) {
+        this.inventaire = inventaire;
         this.sid = sid;
-        recettes = new ArrayList<>();
-
-        // Recette pioche : 1 glace et 1 bois
-        Objets[][] recettePioche = {
-                {null, bois, null},
-                {null, glace, null},
-                {null, null, null}
-        };
-        recettes.add(new CraftRecette(recettePioche, pioche));
-
-        // Dague : 2 fer et 3 glace
-        Objets[][] recetteDague = {
-                {null, fer, null},
-                {glace, glace, glace},
-                {null, fer, null}
-        };
-        recettes.add(new CraftRecette(recetteDague, dague));
-
-        // Arc feu
-        Objets[][] recetteArcFeu = {
-                {eclatFeu, null, null},
-                {null, fer, fer},
-                {bois, bois, bois}
-        };
-        recettes.add(new CraftRecette(recetteArcFeu, arcFeu));
     }
 
-    public void placerObjet(int x, int y, Objets objet) {
-        grille[y][x] = objet;
-    }
+    public void crafterPioche() {
+        Glace glace = new Glace(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+        Bois bois = new Bois(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
 
-    public Objets[][] getGrille() {
-        return grille;
-    }
-
-    public Objets essayerCraft() {
-        for (CraftRecette r : recettes) {
-            if (r.correspond(grille)) {
-                viderGrille(); // Enlève les objets utilisés
-                return r.getResultat();
-            }
-        }
-        return null;
-    }
-
-    public void viderGrille() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                grille[i][j] = null;
-            }
+        if (sid.getInventaire().aAssez(glace,3) && sid.getInventaire().aAssez(bois,2)) {
+            System.out.println("On peut crafter !");
+            sid.getInventaire().ajouterItem(new Pioche(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid));
+            sid.getInventaire().retirer(glace,3);
+            sid.getInventaire().retirer(bois,2);
+        } else if (!sid.getInventaire().aAssez(glace,3)){
+            System.out.println("Pas assez de glace");
+        } else{
+            System.out.println("Pas assez de bois");
         }
     }
+
+    public void crafterDague() {
+        Glace glace = new Glace(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+        Neige neige = new Neige(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+
+        if (sid.getInventaire().aAssez(glace,3) && sid.getInventaire().aAssez(neige,2)) {
+            System.out.println("On peut crafter !");
+            sid.getInventaire().ajouterItem(new Dague(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid));
+            sid.getInventaire().retirer(glace,3);
+            sid.getInventaire().retirer(neige,2);
+        } else if (!sid.getInventaire().aAssez(glace,3)){
+            System.out.println("Pas assez de glace");
+        } else{
+            System.out.println("Pas assez de neige");
+        }
+    }
+
+    public void crafterArc() {
+        EclatFeu feu = new EclatFeu(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+        Bois bois = new Bois(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+        Glace glace = new Glace(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
+
+        if (sid.getInventaire().aAssez(feu,1) && sid.getInventaire().aAssez(bois,3) && sid.getInventaire().aAssez(glace,5)) {
+            System.out.println("On peut crafter !");
+            sid.getInventaire().ajouterItem(new Arc(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid));
+            sid.getInventaire().retirer(feu,1);
+            sid.getInventaire().retirer(bois,2);
+            sid.getInventaire().retirer(glace,5);
+        } else if (!sid.getInventaire().aAssez(feu,1)) {
+            System.out.println("Pas assez d'éclat de feu");
+        }else if(!sid.getInventaire().aAssez(bois,2)){
+            System.out.println("Pas assez de bois");
+        } else{
+            System.out.println("Pas assez de glace");
+        }
+    }
+
+
 }
