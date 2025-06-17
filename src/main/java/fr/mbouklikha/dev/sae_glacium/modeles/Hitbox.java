@@ -24,5 +24,9 @@ public class Hitbox {
         return r1.intersects(r2.getX(), r2.getY(), r2.getWidth(), r2.getHeight());
     }
 
+    public boolean contientPoint(int x, int y) {
+        return rectangle.contains(x, y);
+    }
+
 
 }

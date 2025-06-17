@@ -5,6 +5,8 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 import javafx.scene.input.MouseButton;
