@@ -42,6 +42,8 @@ public class Yeti extends Acteur {
         return frappeEnCours;
     }
 
+
+
     public void suivreEtFrapperSid() {
         int dx = sid.getX() - getX();
         int dy = sid.getY() - getY();
