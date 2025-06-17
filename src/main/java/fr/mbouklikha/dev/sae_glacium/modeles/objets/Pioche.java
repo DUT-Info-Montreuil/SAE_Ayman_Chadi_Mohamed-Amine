@@ -22,7 +22,7 @@ public class Pioche extends Outil {
             } else if (map[y][x] == 2){
                 map[y][x] = -1;
                 // Plus tard : ajouter à l'inventaire
-                getInventaire().ajouterItem(new Glace(getTerrain(), getSid().getInventaire(), getSid()));
+                getInventaire().ajouterItem(new Bois(getTerrain(), getSid().getInventaire(), getSid()));
 
                 getTerrain().mettreAJourHitboxBlocsSolides();
                 System.out.println("Bloc cassé");
