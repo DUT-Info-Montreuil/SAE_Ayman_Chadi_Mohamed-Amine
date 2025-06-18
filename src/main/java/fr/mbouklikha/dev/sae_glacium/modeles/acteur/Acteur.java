@@ -96,7 +96,7 @@ public abstract class Acteur {
         this.pv.set(0);
     }
 
-    public abstract void deplacer(Set<KeyCode> touches);
+    public abstract void agir(Set<KeyCode> touches);
     public abstract void appliquerGravite(int[][] map, int tailleBloc);
 
     public boolean estEnSaut() {

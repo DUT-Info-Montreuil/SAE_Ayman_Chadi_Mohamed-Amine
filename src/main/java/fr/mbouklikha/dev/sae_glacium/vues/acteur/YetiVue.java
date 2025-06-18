@@ -5,6 +5,9 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.Objects;
 
@@ -21,6 +24,16 @@ public class YetiVue {
 
     public YetiVue(Yeti yeti, Pane zoneJeu) {
         this.yeti = yeti;
+
+        Text finJeuTexte = new Text("Fin du jeu !");
+        finJeuTexte.setFill(Color.RED);
+        finJeuTexte.setFont(Font.font("Arial", 40));
+        finJeuTexte.setVisible(false);
+        finJeuTexte.setX(470);  // Ajuste la position selon ta fenêtre
+        finJeuTexte.setY(160);
+
+        zoneJeu.getChildren().add(finJeuTexte);
+
 
         imageDroite = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
                 "/fr/mbouklikha/dev/sae_glacium/images/YETI/D/H2.png")));
@@ -56,6 +69,7 @@ public class YetiVue {
             public void handle(long now) {
                 if (!yeti.estVivant()) {
                     imageView.setVisible(false);
+                    finJeuTexte.setVisible(true);
                     this.stop();
                 } else {
                     updateImage();

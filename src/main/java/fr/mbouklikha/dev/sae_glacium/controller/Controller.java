@@ -111,7 +111,6 @@ public class Controller {
         Inventaire inv = sid.getInventaire();
         sid.getInventaire().ajouter(new Glace(env.getTerrain(), sid.getInventaire(), sid),3);
         sid.getInventaire().ajouter(new Bois(env.getTerrain(), sid.getInventaire(), sid),20);
-        sid.getInventaire().ajouter(new EclatFeu(env.getTerrain(), sid.getInventaire(), sid),1);
 
 
 
@@ -188,9 +187,8 @@ public class Controller {
                 ev -> {
                     for (Acteur a : env.getActeurs()) {
                         a.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-                        a.deplacer(touchesActives);
+                        a.agir(touchesActives);
                     }
-                    yeti.suivreEtFrapperSid(); // logique spécifique au yeti
                     temps++;
                 }
         );

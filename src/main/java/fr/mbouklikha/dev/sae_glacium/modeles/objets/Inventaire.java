@@ -25,14 +25,20 @@ public class Inventaire {
 
 
     public void ajouterItem(Objets objetAAjouter) {
+        boolean trouve = false;
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
                 item.ajouter(1);
-                return;
+                trouve = true;
+                break;
             }
         }
-        items.add(objetAAjouter.creerItem());
+
+        if (!trouve) {
+            items.add(objetAAjouter.creerItem());
+        }
     }
+
 
     public void retirerUnItem(Objets objetARetirer) {
         for (Item item : items) {
@@ -65,13 +71,17 @@ public class Inventaire {
     }
 
     public void ajouter(Objets objetAAjouter, int quantite) {
+        boolean trouve = false;
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
                 item.ajouter(quantite);
-                return;
+                trouve = true;
+                break;
             }
         }
-        items.add(new Item(objetAAjouter, quantite));
+        if (!trouve) {
+            items.add(new Item(objetAAjouter, quantite));
+        }
     }
 
 

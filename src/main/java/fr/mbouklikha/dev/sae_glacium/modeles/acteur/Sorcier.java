@@ -2,6 +2,7 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.EclatFeu;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -29,8 +30,9 @@ public class Sorcier extends Acteur {
     }
 
     @Override
-    public void deplacer(Set<KeyCode> touches) {
+    public void agir(Set<KeyCode> touches) {
         int dx = sid.getX() - getX();
+        EclatFeu feu = new EclatFeu(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
 
         // Orientation graphique
         if (dx > 0) {
@@ -46,6 +48,15 @@ public class Sorcier extends Acteur {
         } else {
             occupe = true;
             direction.set("occupe");
+        }
+
+        if(sid.getHitbox().collisionAvec(this.hitboxSorcier)){
+            if(!sid.getInventaire().aAssez(feu,1)){
+                sid.getInventaire().ajouter(feu,1);
+            }else{
+                System.out.println("déjà récolté");
+            }
+
         }
     }
 

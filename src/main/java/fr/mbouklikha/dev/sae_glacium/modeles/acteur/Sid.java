@@ -75,7 +75,7 @@ public class Sid extends Acteur {
     }
 
     @Override
-    public void deplacer(Set<KeyCode> touches) {
+    public void agir(Set<KeyCode> touches) {
         int nouvelleX = getX();
 
         if (finRalenti == 240) {

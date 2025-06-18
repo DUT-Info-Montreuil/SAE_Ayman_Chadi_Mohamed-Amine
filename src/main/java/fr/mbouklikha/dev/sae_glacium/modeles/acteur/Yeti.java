@@ -4,6 +4,7 @@ import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -41,16 +42,12 @@ public class Yeti extends Acteur {
         this.direction.set(direction);
     }
 
-    @Override
-    public void deplacer(Set<javafx.scene.input.KeyCode> touches) {
-        // Le Yeti se déplace automatiquement
-    }
 
     public boolean isFrappeEnCours() {
         return frappeEnCours;
     }
 
-    public void suivreEtFrapperSid() {
+    public void agir(Set<KeyCode> touches) {
         if (getPv() < 0 || sid == null || !sid.estVivant()) {
             setDirection("immobile");
             frappeEnCours = false;
