@@ -148,6 +148,7 @@ public class Controller {
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
 
+
         // Utilisation de cela car ne fonctionne pas sans comme nous l'avons vue au cours Sprint1
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
