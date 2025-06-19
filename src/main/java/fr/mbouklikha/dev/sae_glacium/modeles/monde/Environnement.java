@@ -1,10 +1,8 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.monde;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Environnement {
 

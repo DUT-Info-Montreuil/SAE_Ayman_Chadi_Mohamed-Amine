@@ -2,6 +2,7 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
+import fr.mbouklikha.dev.sae_glacium.modeles.objets.EclatFeu;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -22,15 +23,22 @@ public class Sorcier extends Acteur {
     private Environnement environnement;
 
     public Sorcier(Environnement env, Sid sid) {
-        super("Sorcier", 10, 900, 150, env);
+        super("Sorcier", 10, 995, 250, env);
         this.environnement = env;
         this.sid = sid;
         this.hitboxSorcier = new Hitbox(getX(), getY(), 45, 62);
     }
 
+
+    /*
+     * Définit le comportement du sorcier à chaque frame en fonction des touches pressées.
+     * Le sorcier s'oriente vers Sid, détermine s'il est "occupé" ou "discute" selon la distance.
+     * Si la hitbox du sorcier touche Sid, ajoute un éclat de feu à l'inventaire de Sid s'il n'en a pas déjà.
+    */
     @Override
-    public void deplacer(Set<KeyCode> touches) {
+    public void agir(Set<KeyCode> touches) {
         int dx = sid.getX() - getX();
+        EclatFeu feu = new EclatFeu(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
 
         // Orientation graphique
         if (dx > 0) {
@@ -47,8 +55,23 @@ public class Sorcier extends Acteur {
             occupe = true;
             direction.set("occupe");
         }
+
+        if(sid.getHitbox().collisionAvec(this.hitboxSorcier)){
+            if(!sid.getInventaire().aAssez(feu,1)){
+                sid.getInventaire().ajouter(feu,1);
+            }else{
+                System.out.println("déjà récolté");
+            }
+
+        }
     }
 
+
+    /*
+     * Applique la gravité sur le sorcier, met à jour sa position verticale et gère les collisions avec les blocs solides.
+     * Si une collision est détectée en descendant, arrête la chute et ajuste la position.
+     * Si une collision est détectée en montant, stoppe la montée et repositionne juste en dessous du bloc.
+    */
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
@@ -87,6 +110,10 @@ public class Sorcier extends Acteur {
 
     }
 
+
+    /*
+     * Vérifie si la hitbox du sorcier entre en collision avec un bloc solide.
+    */
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitboxSorcier.collisionAvec(bloc)) {

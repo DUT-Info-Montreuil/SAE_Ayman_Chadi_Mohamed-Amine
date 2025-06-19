@@ -1,10 +1,8 @@
 package fr.mbouklikha.dev.sae_glacium.modeles.objets;
 
-import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 
-import java.util.ArrayList;
 
 public abstract class Objets {
     private String nom;
@@ -38,7 +36,12 @@ public abstract class Objets {
         return sid;
     }
 
-
-
+    /*
+     * Méthode abstraite représentant l'effet de l'objet lorsqu'il est utilisé à une position (x, y) donnée.
+     * Cette méthode est appelée lorsqu'on utilise l'objet en main (ex. outil, arme, etc.).
+     *
+     * Pour certaines ressources comme le bois, cette méthode peut ne rien faire (pas de fonctionnalité directe),
+     * mais elle doit être implémentée dans chaque sous-classe, notamment pour les objets de craft.
+     */
     public abstract void fonction(int x, int y);
 }

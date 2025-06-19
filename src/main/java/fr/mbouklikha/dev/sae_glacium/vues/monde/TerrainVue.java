@@ -20,6 +20,7 @@ public class TerrainVue {
         afficherMap(tilePane);
     }
 
+    // Permet d'afficher la map
     public void afficherMap(TilePane tilePane) {
         int[][] map = terrain.getMap();
         tilePane.getChildren().clear();

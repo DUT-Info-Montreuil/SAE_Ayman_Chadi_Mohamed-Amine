@@ -2,10 +2,7 @@ package fr.mbouklikha.dev.sae_glacium.modeles.acteur;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.Hitbox;
 import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
-import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Pioche;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.*;
@@ -74,8 +71,13 @@ public class Sid extends Acteur {
         estRalenti.set(ralenti);
     }
 
+
+    /*
+     * Fait agir Sid en fonction des touches pressées.
+     * Gère déplacement horizontal, saut, et collisions.
+    */
     @Override
-    public void deplacer(Set<KeyCode> touches) {
+    public void agir(Set<KeyCode> touches) {
         int nouvelleX = getX();
 
         if (finRalenti == 240) {
@@ -117,6 +119,11 @@ public class Sid extends Acteur {
 
     }
 
+
+    /*
+     * Applique la gravité à Sid en mettant à jour sa position verticale,
+     * et gère les collisions verticales avec les blocs solides.
+    */
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
@@ -155,6 +162,10 @@ public class Sid extends Acteur {
 
     }
 
+
+    /*
+     * Vérifie si la hitbox de Sid entre en collision avec un des blocs solides.
+    */
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitbox.collisionAvec(bloc)) {

@@ -7,7 +7,6 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Environnement;
 
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.*;
 import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Acteur;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.vues.PointsDeVieVue;
 import fr.mbouklikha.dev.sae_glacium.vues.SourisVue;
 import fr.mbouklikha.dev.sae_glacium.vues.acteur.SidVue;
@@ -43,7 +42,6 @@ public class Controller {
     @FXML
     private HBox conteneurInventaire;
 
-    private Inventaire inventaire;
     private InventaireVue inventaireVue;
     private ObjetEnMainVue objetEnMainVue;
 
@@ -78,7 +76,6 @@ public class Controller {
     @FXML
     public void initialize() {
         this.env = new Environnement(992, 576);
-        new TerrainVue(env.getTerrain(), tilePane);
         TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
 
         sid = new Sid(env);
@@ -109,9 +106,8 @@ public class Controller {
 
         // Inventaire
         Inventaire inv = sid.getInventaire();
-        sid.getInventaire().ajouter(new Glace(env.getTerrain(), sid.getInventaire(), sid),3);
-        sid.getInventaire().ajouter(new Bois(env.getTerrain(), sid.getInventaire(), sid),20);
-        sid.getInventaire().ajouter(new EclatFeu(env.getTerrain(), sid.getInventaire(), sid),1);
+        sid.getInventaire().ajouter(new Glace(env.getTerrain(), inv, sid),3);
+        sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),8);
 
 
 
@@ -152,7 +148,7 @@ public class Controller {
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
 
-
+        // Utilisation de cela car ne fonctionne pas sans comme nous l'avons vue au cours Sprint1
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
@@ -188,9 +184,8 @@ public class Controller {
                 ev -> {
                     for (Acteur a : env.getActeurs()) {
                         a.appliquerGravite(env.getTerrain().getMap(), TAILLE_BLOC);
-                        a.deplacer(touchesActives);
+                        a.agir(touchesActives);
                     }
-                    yeti.suivreEtFrapperSid(); // logique spécifique au yeti
                     temps++;
                 }
         );

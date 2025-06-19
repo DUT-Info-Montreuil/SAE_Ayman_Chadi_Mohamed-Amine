@@ -12,6 +12,12 @@ public class TableCraft {
         this.sid = sid;
     }
 
+
+    /*
+     * Crée une pioche si l'inventaire contient au moins 3 glaces et 2 bois.
+     * Si les conditions sont remplies, la pioche est ajoutée à l'inventaire
+     * et les ressources sont retirées.
+    */
     public void crafterPioche() {
         Glace glace = new Glace(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
         Bois bois = new Bois(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
@@ -28,6 +34,12 @@ public class TableCraft {
         }
     }
 
+
+    /*
+     * Crée une dague si l'inventaire contient au moins 3 glaces et 2 neiges.
+     * Si les conditions sont remplies, la dague est ajoutée à l'inventaire
+     * et les ressources sont retirées.
+    */
     public void crafterDague() {
         Glace glace = new Glace(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
         Neige neige = new Neige(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
@@ -44,6 +56,13 @@ public class TableCraft {
         }
     }
 
+
+    /*
+     * Crée un arc de feu si l'inventaire contient au moins :
+     * 1 éclat de feu, 3 bois et 5 glaces.
+     * Si les conditions sont remplies, l’arc est ajouté à l’inventaire
+     * et les ressources sont retirées.
+    */
     public void crafterArc() {
         EclatFeu feu = new EclatFeu(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);
         Bois bois = new Bois(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid);

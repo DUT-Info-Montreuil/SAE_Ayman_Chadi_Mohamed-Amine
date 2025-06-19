@@ -40,7 +40,7 @@ public class PointsDeVieVue {
 
     }
 
-
+    // Met à  jour les flamme selon les dégats reçu par yeti
     public void mettreAJourFlammes() {
         int vie = sid.getPv(); // 0 à 50
         int reste = vie;

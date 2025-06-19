@@ -21,16 +21,32 @@ public class Inventaire {
 
 
 
+
+    /*
+     * Ajoute un objet à l'inventaire avec une quantité de 1.
+     * Si l'objet est déjà présent, augmente sa quantité de 1.
+    */
     public void ajouterItem(Objets objetAAjouter) {
+        boolean trouve = false;
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
                 item.ajouter(1);
-                return;
+                trouve = true;
+                break;
             }
         }
-        items.add(objetAAjouter.creerItem());
+
+        if (!trouve) {
+            items.add(objetAAjouter.creerItem());
+        }
     }
 
+
+
+    /*
+     * Retire un exemplaire d'un objet dans l'inventaire.
+     * Si la quantité atteint 0, supprime l'objet de l'inventaire.
+    */
     public void retirerUnItem(Objets objetARetirer) {
         for (Item item : items) {
             if (item.getNom().equals(objetARetirer.getNom())) {
@@ -43,6 +59,11 @@ public class Inventaire {
         }
     }
 
+
+
+    /*
+     * Vérifie si l'inventaire contient un objet donné.
+    */
     public boolean contient(Objets objet) {
         for (Item item : items) {
             if (item.getObjet().equals(objet)) {
@@ -52,6 +73,11 @@ public class Inventaire {
         return false;
     }
 
+
+
+    /*
+     * Vérifie si l'inventaire possède au moins une certaine quantité d'un objet.
+    */
     public boolean aAssez(Objets objet, int quantiteRequise) {
         for (Item item : items) {
             if (item.getNom().equals(objet.getNom())) {
@@ -61,17 +87,35 @@ public class Inventaire {
         return false;
     }
 
+
+
+    /*
+     * Ajoute une certaine quantité d'un objet dans l'inventaire.
+     * Si l'objet est déjà présent, augmente la quantité.
+     * Sinon, crée un nouvel item avec cette quantité.
+    */
     public void ajouter(Objets objetAAjouter, int quantite) {
+        boolean trouve = false;
         for (Item item : items) {
             if (item.getNom().equals(objetAAjouter.getNom())) {
                 item.ajouter(quantite);
-                return;
+                trouve = true;
+                break;
             }
         }
-        items.add(new Item(objetAAjouter, quantite));
+        if (!trouve) {
+            items.add(new Item(objetAAjouter, quantite));
+        }
     }
 
 
+
+
+    /*
+     * Retire une certaine quantité d'un objet dans l'inventaire.
+     * Si la quantité devient 0 ou moins, supprime l'objet de l'inventaire.
+     * Sinon, met à jour la quantité.
+    */
     public void retirer(Objets objetARetirer, int quantite) {
         for (Item item : items) {
             if (item.getNom().equals(objetARetirer.getNom())) {
@@ -86,14 +130,6 @@ public class Inventaire {
             }
         }
     }
-
-
-
-
-
-
-
-
 
 }
 

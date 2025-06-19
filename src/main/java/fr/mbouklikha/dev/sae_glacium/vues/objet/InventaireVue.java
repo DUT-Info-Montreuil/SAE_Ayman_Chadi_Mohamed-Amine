@@ -28,6 +28,12 @@ public class InventaireVue {
         this.sid = sid;
     }
 
+
+    /*
+     * Initialise les cases de l'inventaire graphique.
+     * Crée 8 cases avec image et quantité, configure les styles et événements souris.
+     * Ajoute un listener sur la liste observable des items pour mettre à jour l'affichage.
+    */
     public void initialiserCases(Inventaire inventaire) {
         conteneur.getChildren().clear();
 
@@ -81,11 +87,13 @@ public class InventaireVue {
             quantites[i] = quantiteLabel;
         }
 
-        // Mise à jour initiale
-        mettreAJourInventaire(inventaire);
     }
 
 
+    /*
+     * Met à jour l'affichage des cases de l'inventaire en fonction des items présents.
+     * Affiche l'image et la quantité des objets ou vide la case si aucun item.
+    */
     public void mettreAJourInventaire(Inventaire inventaire) {
         for (int i = 0; i < 8; i++) {
             if (i < inventaire.getItems().size()) {
