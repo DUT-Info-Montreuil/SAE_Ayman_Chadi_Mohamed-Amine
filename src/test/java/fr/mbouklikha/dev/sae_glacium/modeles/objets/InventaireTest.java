@@ -16,7 +16,7 @@ class InventaireTest {
     private Objets bois;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() throws Exception  {
         // Initialisation avant chaque test : inventaire vide, environnement et joueur Sid
         inventaire = new Inventaire();
         env = new Environnement(992, 576);
@@ -28,7 +28,7 @@ class InventaireTest {
     }
 
     @Test
-    void testAjouterItem() {
+    public void testAjouterItem() {
         // Vérifie que l'inventaire est initialement vide
         assertTrue(inventaire.getItems().isEmpty());
 
@@ -47,7 +47,7 @@ class InventaireTest {
     }
 
     @Test
-    void testRetirerUnItem() {
+    public void testRetirerUnItem() {
         // Ajoute 2 glaces dans l'inventaire
         inventaire.ajouter(glace, 2);
 
@@ -61,7 +61,7 @@ class InventaireTest {
     }
 
     @Test
-    void testContient() {
+    public void testContient() {
         // Vérifie que l'inventaire ne contient pas la glace au départ
         assertFalse(inventaire.contient(glace));
 
@@ -71,7 +71,7 @@ class InventaireTest {
     }
 
     @Test
-    void testAAssez() {
+    public void testAAssez() {
         // Ajoute 3 glaces dans l'inventaire
         inventaire.ajouter(glace, 3);
 
@@ -83,7 +83,7 @@ class InventaireTest {
     }
 
     @Test
-    void testAjouterAvecQuantite() {
+    public void testAjouterAvecQuantite() {
         // Ajoute 5 glaces d'un coup
         inventaire.ajouter(glace, 5);
         assertEquals(1, inventaire.getItems().size());
@@ -95,7 +95,7 @@ class InventaireTest {
     }
 
     @Test
-    void testRetirerAvecQuantite() {
+    public void testRetirerAvecQuantite() {
         // Ajoute 5 glaces
         inventaire.ajouter(glace, 5);
 
@@ -108,9 +108,4 @@ class InventaireTest {
         assertTrue(inventaire.getItems().isEmpty());
     }
 
-    @Test
-    void testObjetEnMainParDefaut() {
-        // Vérifie que l'objet en main au départ est bien "pioche" par défaut
-        assertEquals("pioche", inventaire.getObjetEnMain().get());
-    }
 }

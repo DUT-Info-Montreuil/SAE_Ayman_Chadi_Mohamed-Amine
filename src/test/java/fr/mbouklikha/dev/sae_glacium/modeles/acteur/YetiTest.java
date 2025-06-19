@@ -19,7 +19,7 @@ class YetiTest {
     private Yeti yeti;
 
     @BeforeEach
-    void setup() {
+    public void setup() throws Exception {
         // Création d'un environnement minimal avec terrain vide (pas de blocs solides)
         environnement = new Environnement(992, 576);
 
@@ -35,12 +35,12 @@ class YetiTest {
     }
 
     @Test
-    void testDirectionInitiale() {
+    public void testDirectionInitiale() {
         assertEquals("immobile", yeti.getDirection().get());
     }
 
     @Test
-    void testAgir_immobileQuandSidMort() {
+    public void testAgir_immobileQuandSidMort() {
         sid.decrementerPv(10); // Sid mort
         yeti.agir(Collections.emptySet());
         assertEquals("immobile", yeti.getDirection().get());
@@ -48,7 +48,7 @@ class YetiTest {
     }
 
     @Test
-    void testAgir_frappesEtDegats() {
+    public void testAgir_frappesEtDegats() {
         sid.setX(105); // à moins de 20 px de distance
         sid.setY(350); // même hauteur
         yeti.setX(100);
@@ -62,7 +62,7 @@ class YetiTest {
     }
 
     @Test
-    void testAgir_deplacementSansCollision() {
+    public void testAgir_deplacementSansCollision() {
         // Positionner Sid et Yeti à une distance correcte
         sid.setX(150); // dx = 50 : entre 20 et 180 : le Yeti doit bouger
         sid.setY(350);
@@ -105,7 +105,7 @@ class YetiTest {
 
 
     @Test
-    void testCollisionAvecBlocs() {
+    public void testCollisionAvecBlocs() {
         ArrayList<Hitbox> blocs = new ArrayList<>();
         blocs.add(new Hitbox(100, 350, 60, 60)); // même position que le Yeti
 
