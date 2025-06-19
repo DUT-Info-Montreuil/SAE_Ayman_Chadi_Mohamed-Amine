@@ -74,6 +74,11 @@ public class Sid extends Acteur {
         estRalenti.set(ralenti);
     }
 
+
+    /*
+     * Fait agir Sid en fonction des touches pressées.
+     * Gère déplacement horizontal, saut, et collisions.
+    */
     @Override
     public void agir(Set<KeyCode> touches) {
         int nouvelleX = getX();
@@ -117,6 +122,11 @@ public class Sid extends Acteur {
 
     }
 
+
+    /*
+     * Applique la gravité à Sid en mettant à jour sa position verticale,
+     * et gère les collisions verticales avec les blocs solides.
+    */
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
@@ -155,6 +165,10 @@ public class Sid extends Acteur {
 
     }
 
+
+    /*
+     * Vérifie si la hitbox de Sid entre en collision avec un des blocs solides.
+    */
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitbox.collisionAvec(bloc)) {

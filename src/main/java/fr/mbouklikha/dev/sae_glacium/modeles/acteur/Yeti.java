@@ -47,6 +47,14 @@ public class Yeti extends Acteur {
         return frappeEnCours;
     }
 
+
+    /*
+     * Gère le comportement du Yeti selon la position de Sid et son état.
+     * Si Sid est hors de portée verticale, le Yeti reste immobile.
+     * Si Sid est proche horizontalement, le Yeti attaque et inflige des dégâts périodiques,
+     * en ralentissant Sid.
+     * Sinon, le Yeti se déplace horizontalement vers Sid en évitant les collisions.
+    */
     public void agir(Set<KeyCode> touches) {
         if (getPv() < 0 || sid == null || !sid.estVivant()) {
             setDirection("immobile");
@@ -105,6 +113,12 @@ public class Yeti extends Acteur {
         hitboxYeti.setPosition(getX(), getY());
     }
 
+
+
+    /*
+     * Applique la gravité au Yeti en mettant à jour sa position verticale,
+     * tout en gérant les collisions avec le terrain.
+    */
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
@@ -127,6 +141,11 @@ public class Yeti extends Acteur {
         hitboxYeti.setPosition(getX(), getY());
     }
 
+
+
+    /*
+     * Vérifie si la hitbox du Yeti entre en collision avec un des blocs solides.
+    */
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitboxYeti.collisionAvec(bloc)) {

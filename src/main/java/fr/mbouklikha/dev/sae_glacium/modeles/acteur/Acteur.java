@@ -92,24 +92,13 @@ public abstract class Acteur {
         return getPv() > 0;
     }
 
-    public void meurt(){
-        this.pv.set(0);
-    }
 
     public abstract void agir(Set<KeyCode> touches);
     public abstract void appliquerGravite(int[][] map, int tailleBloc);
 
-    public boolean estEnSaut() {
-        return enSaut;
-    }
 
-    public void setEnSaut(boolean s) {
-        enSaut = s;
-    }
 
     public abstract Hitbox getHitbox();
-
-
 
     @Override
     public String toString() {
