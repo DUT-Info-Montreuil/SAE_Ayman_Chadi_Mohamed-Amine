@@ -10,6 +10,6 @@ public class Bois extends Ressource {
     }
 
     public void fonction(int x, int y){
-
+        // Pas de fonctionnalité
     }
 }

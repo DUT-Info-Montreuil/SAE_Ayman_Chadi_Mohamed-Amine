@@ -44,9 +44,9 @@ public class ObjetEnMainVue {
     }
 
 
-/*
- * Met à jour l'affichage de l'objet tenu en main.
-*/
+    /*
+     * Met à jour l'affichage de l'objet tenu en main.
+     */
     public void mettreAJour() {
         Objets objetEnMain = sid.getObjetEnMain();
         if (objetEnMain == null || objetEnMain.getNom().isEmpty()){

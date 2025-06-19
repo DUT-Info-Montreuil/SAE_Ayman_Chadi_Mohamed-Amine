@@ -107,7 +107,7 @@ public class Controller {
         // Inventaire
         Inventaire inv = sid.getInventaire();
         sid.getInventaire().ajouter(new Glace(env.getTerrain(), inv, sid),3);
-        sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),20);
+        sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),8);
 
 
 
@@ -148,7 +148,7 @@ public class Controller {
         tilePane.setFocusTraversable(false);
         zoneJeu.setFocusTraversable(true);
 
-
+        // Utilisation de cela car ne fonctionne pas sans comme nous l'avons vue au cours Sprint1
         Platform.runLater(() -> {
             zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
             zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));

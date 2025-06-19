@@ -5,8 +5,6 @@ import fr.mbouklikha.dev.sae_glacium.modeles.monde.Terrain;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Inventaire;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Objets;
-import fr.mbouklikha.dev.sae_glacium.modeles.objets.Outil;
 import fr.mbouklikha.dev.sae_glacium.modeles.objets.Ressource;
 import fr.mbouklikha.dev.sae_glacium.vues.monde.TerrainVue;
 import javafx.scene.input.MouseButton;
@@ -32,6 +30,7 @@ public class Souris {
         this.tilePane = tilePane;
     }
 
+    // Utiliser par les outil ou arme afin de casser ou attaquer
     private void clic_gauche(int x, int y) {
         Objets objets = sid.getObjetEnMain();
         if (objets != null && objets instanceof Outil) {
@@ -40,6 +39,7 @@ public class Souris {
         terrainVue.afficherMap(tilePane);
     }
 
+    // Utiliser par les ressources posable afin d'être poser
     private void clic_droit(int x, int y) {
         Objets objets = sid.getObjetEnMain();
         if (objets != null && objets instanceof Ressource) {
@@ -48,6 +48,8 @@ public class Souris {
         terrainVue.afficherMap(tilePane);
     }
 
+
+    // Gère les clic
     public void gererClic(MouseEvent event) {
         int sourisX = (int) event.getX();
         int sourisY = (int) event.getY();
