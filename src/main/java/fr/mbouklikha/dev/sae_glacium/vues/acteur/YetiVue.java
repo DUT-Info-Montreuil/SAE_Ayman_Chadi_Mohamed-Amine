@@ -25,11 +25,11 @@ public class YetiVue {
     public YetiVue(Yeti yeti, Pane zoneJeu) {
         this.yeti = yeti;
 
-        Text finJeuTexte = new Text("Fin du jeu !");
+        Text finJeuTexte = new Text("Bravo ! Fin du jeu !");
         finJeuTexte.setFill(Color.RED);
         finJeuTexte.setFont(Font.font("Arial", 40));
         finJeuTexte.setVisible(false);
-        finJeuTexte.setX(470);  // Ajuste la position selon ta fenêtre
+        finJeuTexte.setX(390);  // Ajuste la position selon ta fenêtre
         finJeuTexte.setY(160);
 
         zoneJeu.getChildren().add(finJeuTexte);

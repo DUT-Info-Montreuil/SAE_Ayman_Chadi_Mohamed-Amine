@@ -4,6 +4,9 @@ import fr.mbouklikha.dev.sae_glacium.modeles.acteur.Sid;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class SidVue {
@@ -18,6 +21,15 @@ public class SidVue {
 
     public SidVue(Sid sid, Pane zoneJeu) {
         this.sid = sid;
+
+        Text finJeuTexte = new Text("Vous avez perdu !");
+        finJeuTexte.setFill(Color.RED);
+        finJeuTexte.setFont(Font.font("Arial", 40));
+        finJeuTexte.setVisible(false);
+        finJeuTexte.setX(400);  // Ajuste la position selon ta fenêtre
+        finJeuTexte.setY(160);
+
+        zoneJeu.getChildren().add(finJeuTexte);
 
         imageDroite = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_droite.png"));
         imageGauche = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/sid/sid_gauche.png"));
@@ -40,6 +52,7 @@ public class SidVue {
         sid.getXProperty().addListener((obs, oldVal, newVal) -> {
             if (!sid.estVivant()) {
                 imageView.setVisible(false);
+                finJeuTexte.setVisible(true);
             }
         });
 
